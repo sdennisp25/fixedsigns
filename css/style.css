@@ -25,6 +25,19 @@ a{
 #showProfile{
 background-color: #00A3CC;
 }
+
+.text-center {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.descript {
+	background-color: rgb(96, 143, 244);
+	color: white;
+}
+
+.compat {
+	background-color: rgb(194, 230, 244);
+}
 	
 #chat{
 	border: 3px solid #BDBDBD;
