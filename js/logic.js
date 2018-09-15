@@ -9,12 +9,34 @@ var config = {
 };
 firebase.initializeApp(config);
 
+//GLOBAL//
+//firebase paths//
 var database = firebase.database();
+var profilePath = database.ref("/profile");
 var user = firebase.auth().currentUser;
+//Jquery HTML Buttons//
+var $submitSignUp = $("#submitSignUp");
+var $showSignUp = $("#showSignUp");
+var $submitLogIn = $("#submitLogin");
+var $showLogin = $("#showLogin");
+var $submitProfile = $("#profileSubmit")
+var $signOut = $("#signOut");
+//Related to profile
+var $firstName;
+var $lastName;
+var $gender;
+var $seeking;
+var $birthday;
+var $sunSign;
+var $aboutYou;
+var match1;
+var match2;
+var match3;
+
 
 //FIREBASE AUTHS - CREATE ACCOUNT, LOGIN, LOGOUT, USER STATUS CHANGE//
 //Create a Firebase User using Navbar-Register
-$("#submitSignUp").on("click", function (user) {
+$submitSignUp.on("click", function (user) {
 	var displayName = $("#username").val().trim();
 	var email = $("#email").val().trim();
 	var password = $("#password").val().trim();
@@ -28,24 +50,26 @@ $("#submitSignUp").on("click", function (user) {
 });
 
 //Sign into Firebase using Navbar-Login
-$("#submitLogin").on("click", function () {
+$submitLogIn.on("click", function () {
 	var email = $("#loginEmail").val().trim();
 	var password = $("#LoginPsw").val().trim();
 	console.log("Login Successful!");
-	console.log(user);
 	firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
 		var errorCode = error.code;
 		var errorMessage = error.message;
 		console.log("Error: " + errorCode + " Message: " + errorMessage);
-
 	});
+	$showLogin.hide();
+	$showSignUp.hide();
 });
 
-//Sign out of Firebase using Navbar-Sign OUt
-$("#signOut").on("click", function () {
+//Sign out of Firebase using Navbar-Sign Out
+$signOut.on("click", function () {
 	event.preventDefault();
 	firebase.auth().signOut().then(function () {
 		console.log("Sign Out Successful");
+		$showLogin.show();
+		$showSignUp.show();
 	}).catch(function (error) {
 		console.log("Error Signing Out");
 	});
@@ -54,6 +78,11 @@ $("#signOut").on("click", function () {
 //Firebase to listen for user status changes//
 firebase.auth().onAuthStateChanged(function (user) {
 	if (user) {
+		//firebase.getProfile(user.uid).then(){window.location = /matches}
+		profilePath.orderByChild("userID").equalTo(user.uid).on("value", function (snapshot) {
+			getProfile(snapshot);
+		});
+		console.log(user.uid);
 		console.log("User Signed In");
 		displayUser();
 	} else {
@@ -61,16 +90,16 @@ firebase.auth().onAuthStateChanged(function (user) {
 	}
 });
 
-
+//DO WE NEED THIS? Or can this be included in getProfile Function?//
 function displayUser() {
 	var user = firebase.auth().currentUser;
-	var name, email, photoUrl, uid;
+	// var displayName, email, photoUrl, uid;
 	if (user != null) {
-		name = user.displayName;
+		displayName = user.displayName;
 		email = user.email;
-		photoUrl = user.photoURL;
-		uid = user.uid;
-		$("#showProfile").html(name + "<br>" + email);
+		// photoUrl = user.photoURL;
+		// uid = user.uid;
+		$("#showProfile").html(displayName + "<br>" + email);
 	}
 }
 
@@ -106,3 +135,22 @@ function setProfile() {
 database.ref("/profile").on("child_added", function (snapshot) {
 	console.log(snapshot.val());
 })
+
+//Retrieve the user's profile information from Firebase//
+//Call this on the AuthStateChange function//
+function getProfile(snapshot) {
+	var sv = snapshot.val();
+	var keys = Object.keys(sv);
+	var profile = sv[keys]
+	$sunSign = profile.sunSign;
+	$firstName = profile.firstName;
+	$lastName = profile.lastName;
+	$gender = profile.gender;
+	$seeking = profile.relationship;
+	$aboutYou = profile.aboutYou;
+	console.log($firstName, $lastName, $sunSign, $gender, $seeking, $aboutYou);
+	//Display profile information in the DOM as needed
+	}
+
+
+
