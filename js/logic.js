@@ -150,7 +150,59 @@ function getProfile(snapshot) {
 	$aboutYou = profile.aboutYou;
 	console.log($firstName, $lastName, $sunSign, $gender, $seeking, $aboutYou);
 	//Display profile information in the DOM as needed
-	}
+	bestMatches($sunSign);
+	console.log("Matches: " + match1 +" "+ match2 + " "+ match3);
+}
 
-
+function bestMatches() {
+	if ($sunSign === "Aquarius") {
+		match1 = "Aries";
+		match2 = "Gemini";
+		match3 = "Libra";
+	} else if ($sunSign === "Pisces") {
+		match1 = "Taurus";
+		match2 = "Cancer";
+		match3 = "Scorpio";
+	} else if ($sunSign === "Aries") {
+		match1 = "Gemini";
+		match2 = "Leo";
+		match3 = "Sagittarius";
+	} else if ($sunSign === "Taurus") {
+		match1 = "Cancer";
+		match2 = "Virgo";
+		match3 = "Capricorn";
+	} else if ($sunSign === "Gemini") {
+		match1 = "Aries";
+		match2 = "Leo";
+		match3 = "Libra";
+	} else if ($sunSign === "Cancer") {
+		match1 = "Taurus";
+		match2 = "Virgo";
+		match3 = "Scorpio";
+	} else if ($sunSign === "Leo"){
+		match1 = "Aries";
+		match2 = "Gemini";
+		match3 = "Libra";
+	} else if ($sunSign === "Virgo"){
+		match1 = "Taurus";
+		match2 = "Cancer";
+		match3 = "Scorpio";
+	} else if ($sunSign === "Libra"){
+		match1 = "Gemini";
+		match2 = "Leo";
+		match3 = "Sagittarius";
+	} else if ($sunSign === "Scorpio"){
+		match1 = "Cancer";
+		match2 = "Virgo";
+		match3 = "Capricorn";
+	} else if ($sunSign === "Sagittarius"){
+		match1 = "Aries";
+		match2 = "Leo";
+		match3 = "Libra";
+	} else if ($sunSign === "Capricorn"){
+		match1 = "Taurus";
+		match2 = "Virgo";
+		match3 = "Scorpio";
+	} 
+} 
 
