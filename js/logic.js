@@ -33,6 +33,7 @@ var match1;
 var match2;
 var match3;
 var matchArray = [];
+var matchSeeking;
 
 
 //FIREBASE AUTHS - CREATE ACCOUNT, LOGIN, LOGOUT, USER STATUS CHANGE//
@@ -60,8 +61,6 @@ $submitLogIn.on("click", function () {
 		var errorMessage = error.message;
 		console.log("Error: " + errorCode + " Message: " + errorMessage);
 	});
-	$showLogin.hide();
-	$showSignUp.hide();
 });
 
 //Sign out of Firebase using Navbar-Sign Out
@@ -71,6 +70,7 @@ $signOut.on("click", function () {
 		console.log("Sign Out Successful");
 		$showLogin.show();
 		$showSignUp.show();
+		matchArray = [];
 	}).catch(function (error) {
 		console.log("Error Signing Out");
 	});
@@ -79,31 +79,20 @@ $signOut.on("click", function () {
 //Firebase to listen for user status changes//
 firebase.auth().onAuthStateChanged(function (user) {
 	if (user) {
+		$showLogin.hide();
+		$showSignUp.hide();
 		//firebase.getProfile(user.uid).then(){window.location = /matches}
 		profilePath.orderByChild("userID").equalTo(user.uid).on("value", function (snapshot) {
 			getProfile(snapshot);
-			});
+		});
 		console.log(user.uid);
 		console.log("User Signed In");
-		displayUser();
 	} else {
 		console.log("User Signed Out");
 	}
 });
 
-//DO WE NEED THIS? Or can this be included in getProfile Function?//
-function displayUser() {
-	var user = firebase.auth().currentUser;
-	// var displayName, email, photoUrl, uid;
-	if (user != null) {
-		displayName = user.displayName;
-		email = user.email;
-		// photoUrl = user.photoURL;
-		// uid = user.uid;
-		// $("#showProfile").html(displayName + "<br>" + email);
-	}
-}
-
+///SUBMIT PROFILE AND SET IN FIREBASE//
 $("#profileSubmit").on("click", function () {
 	event.preventDefault();
 	setProfile();
@@ -117,7 +106,7 @@ function setProfile() {
 	var $birthday = $("#bday").val();
 	var $sunSign = $("#sunSign").val();
 	var $aboutYou = $("#aboutYou").val();
-
+	
 	var user = firebase.auth().currentUser;
 	var userProfile = {
 		aboutYou: $aboutYou,
@@ -128,6 +117,7 @@ function setProfile() {
 		lastName: $lastName,
 		firstName: $firstName,
 		userID: user.uid,
+		displayName: user.displayName
 	};
 	database.ref("/profile").push().set(userProfile);
 	console.log(userProfile);
@@ -152,10 +142,12 @@ function getProfile(snapshot) {
 	$aboutYou = profile.aboutYou;
 	console.log($firstName, $lastName, $sunSign, $gender, $seeking, $aboutYou);
 	//Display profile information in the DOM as needed
+	$(".sun-sign").html("Hello, " + $firstName +"!" +"<br>" + " You're a " +$sunSign);
 	bestMatches($sunSign);
 	console.log("Matches: " + match1 + " " + match2 + " " + match3);
 }
 
+//FUNCTION TO DETERMINE MOST COMPATIBLE SIGNS
 function bestMatches() {
 	if ($sunSign === "Aquarius") {
 		match1 = "Aries";
@@ -211,65 +203,94 @@ function bestMatches() {
 	renderButtons();
 }
 
+//CREATE BUTTONS IN DOM WHICH CARRY MATCH1-3 VALUES AS THEIR DATA-PROPERTY
 function renderButtons() {
-	for (var i = 0; i <matchArray.length; i++){
-		var matchButton= $("<button>");
-		matchButton.attr("id","matchBtn");
+	for (var i = 0; i < matchArray.length; i++) {
+		var matchButton = $("<button>");
+		matchButton.attr("id", "matchBtn");
 		matchButton.attr("data-matchvalue", matchArray[i]);
 		$("#showProfile").append(matchButton);
 	}
 }
 
-$(document).on("click", "#matchBtn", function(){
+//CLICKING ON A MATCH BUTTON DISPLAYS USER PROFILES THAT HAVE THAT SIGN
+$(document).on("click", "#matchBtn", function () {
 	let sign = $(this).attr("data-matchvalue")
 	getMatches(sign)
 })
 
-function getMatches(sign){
-console.log(sign);
-	profilePath.orderByChild('sunSign').equalTo(sign).on('value', (res) => {
-		console.log('res: ', res.val());
-		res = res.val();
-		for (var key in res) {
-			console.log(res[key].firstName)
-		}
-	});
-
-
-
-	// reference///
-// 	var playersRef = firebase.database().ref("players/");
-
-// playersRef.orderByChild("name").on("child_added", function(data) {
-//    console.log(data.val().name);
-// });
-
-
-	// database.collection('profiles').where("sunSign", "==", sign)
-  //   .get()
-  //   .then(function(querySnapshot) {
-  //       querySnapshot.forEach(function(doc) {
-  //           // doc.data() is never undefined for query doc snapshots
-  //           console.log(doc.id, " => ", doc.data());
-  //       });
-  //   })
-  //   .catch(function(error) {
-  //       console.log("Error getting documents: ", error);
-	//   });
-	
-
-	// profilePath.orderByChild("sunSign").equalTo(sign).on("value", function (snapshot){
-	// 	snapshot.forEach(function(childSnapshot) {
-	// 		var childKey = childSnapshot.key;
-	// 		var childData = childSnapshot.val();
-	// 		let match = $('<div>')
-	// 		match.text(childData.firstName)
-	// 		$('#matches').append(match)
-	// 		console.log(childKey);
-	// 		console.log(childData);
-			
-	// 		// ...
-	// 	});
-	// });
-
+function getMatches(sign) {
+	console.log(sign);
+	profilePath.orderByChild("sunSign").equalTo(sign).once("value").then(function (snapshot) {
+		snapshot.forEach(function (data) {
+			var matchData = data.val();
+			// var key = data.key;
+			console.log(matchData);
+			var matchName = matchData.firstName;
+			var matchSign = matchData.sunSign;
+			var matchGender = matchData.gender;
+			var matchSeeking = matchData.relationship;
+			var matchAbout = matchData.aboutYou;
+			console.log("Match info: " + matchName + " " + matchSign + " " + matchGender + " " + matchSeeking + " " + matchAbout);
+			//Sort Profiles for Gender Preferences//
+			function sortByGender() {
+				if (($seeking === "f/m") && (matchSeeking === "m/f")) {
+					console.log(matchName);
+				} else if ($seeking === "m/f" && matchSeeking === "f/m") {
+					console.log(matchName);
+				} else if ($seeking === "m/m" && matchSeeking === "m/m") {
+					console.log(matchName);
+				} else if ($seeking === "f/f" && matchSeeking === "f/f") {
+					console.log(matchName);
+				} else { }
+			}
+			sortByGender();
+		});
+});
 }
+
+// DO WE NEED THIS? Or can this be included in getProfile Function?//
+// function displayUser() {
+// 	var user = firebase.auth().currentUser;
+// 	var displayName, email, photoUrl, uid;
+// 	if (user != null) {
+// 		displayName = user.displayName;
+// 		email = user.email;
+// 		photoUrl = user.photoURL;
+// 		uid = user.uid;
+// 		$("#showProfile").html(displayName + "<br>" + email);
+// 	}
+// }
+
+
+///////////////////REFERENCES CODE/////////////////////////////
+//REFERENCE: LOOP Attempt - Returned most recent value only - switched to forEach
+// 	profilePath.orderByChild("sunSign").equalTo(sign).on("value", function (matchData) {
+	//  console.log('snapshot: ', matchData.val());
+	// 		matchData = matchData.val();
+	// 		for (var key in matchData) {
+		// 			var matchName = matchData[key].firstName;
+		// 			var matchSign = matchData[key].sunSign;
+		// 			var matchGender = matchData[key].gender;
+		// 			var matchSeeking = matchData[key].relationship;
+		// 			var matchAbout = matchData[key].aboutYou;
+		//    }
+		// 		console.log("Match info: " + matchName + " " + matchSign + " " + matchGender + " " + matchSeeking + " " + matchAbout);
+
+//REFERNCE: LOOP Example: 
+// var query = firebase.database().ref("users").orderByKey();
+		// query.once("value")
+		// 	.then(function (snapshot) {
+		// 		snapshot.forEach(function (childSnapshot) {
+		// 			// key will be "ada" the first time and "alan" the second time
+		// 			var key = childSnapshot.key;
+		// 			// childData will be the actual contents of the child
+		// 			var childData = childSnapshot.val();
+		// 		});
+		// 	});
+
+// REFERENCE: Show Object on Child-Added
+		// 	var playersRef = firebase.database().ref("players/");
+		// playersRef.orderByChild("name").on("child_added", function(data) {
+		//    console.log(data.val().name);
+		// });
