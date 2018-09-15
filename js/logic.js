@@ -32,7 +32,7 @@ var $aboutYou;
 var match1;
 var match2;
 var match3;
-var matchArray
+var matchArray = [];
 
 
 //FIREBASE AUTHS - CREATE ACCOUNT, LOGIN, LOGOUT, USER STATUS CHANGE//
@@ -82,7 +82,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 		//firebase.getProfile(user.uid).then(){window.location = /matches}
 		profilePath.orderByChild("userID").equalTo(user.uid).on("value", function (snapshot) {
 			getProfile(snapshot);
-		});
+			});
 		console.log(user.uid);
 		console.log("User Signed In");
 		displayUser();
@@ -100,7 +100,7 @@ function displayUser() {
 		email = user.email;
 		// photoUrl = user.photoURL;
 		// uid = user.uid;
-		$("#showProfile").html(displayName + "<br>" + email);
+		// $("#showProfile").html(displayName + "<br>" + email);
 	}
 }
 
@@ -135,6 +135,7 @@ function setProfile() {
 
 database.ref("/profile").on("child_added", function (snapshot) {
 	console.log(snapshot.val());
+	
 })
 
 //Retrieve the user's profile information from Firebase//
@@ -152,7 +153,7 @@ function getProfile(snapshot) {
 	console.log($firstName, $lastName, $sunSign, $gender, $seeking, $aboutYou);
 	//Display profile information in the DOM as needed
 	bestMatches($sunSign);
-	console.log("Matches: " + match1 +" "+ match2 + " "+ match3);
+	console.log("Matches: " + match1 + " " + match2 + " " + match3);
 }
 
 function bestMatches() {
@@ -180,33 +181,52 @@ function bestMatches() {
 		match1 = "Taurus";
 		match2 = "Virgo";
 		match3 = "Scorpio";
-	} else if ($sunSign === "Leo"){
+	} else if ($sunSign === "Leo") {
 		match1 = "Aries";
 		match2 = "Gemini";
 		match3 = "Libra";
-	} else if ($sunSign === "Virgo"){
+	} else if ($sunSign === "Virgo") {
 		match1 = "Taurus";
 		match2 = "Cancer";
 		match3 = "Scorpio";
-	} else if ($sunSign === "Libra"){
+	} else if ($sunSign === "Libra") {
 		match1 = "Gemini";
 		match2 = "Leo";
 		match3 = "Sagittarius";
-	} else if ($sunSign === "Scorpio"){
+	} else if ($sunSign === "Scorpio") {
 		match1 = "Cancer";
 		match2 = "Virgo";
 		match3 = "Capricorn";
-	} else if ($sunSign === "Sagittarius"){
+	} else if ($sunSign === "Sagittarius") {
 		match1 = "Aries";
 		match2 = "Leo";
 		match3 = "Libra";
-	} else if ($sunSign === "Capricorn"){
+	} else if ($sunSign === "Capricorn") {
 		match1 = "Taurus";
 		match2 = "Virgo";
 		match3 = "Scorpio";
-	} 
-} 
-
-function renderButtons (){
-
+	}
+	matchArray.push(match1, match2, match3);
+	console.log(matchArray);
+	renderButtons();
 }
+
+function renderButtons() {
+	for (var i = 0; i <matchArray.length; i++){
+		var matchButton= $("<button>");
+		matchButton.attr("id","matchBtn");
+		matchButton.attr("data-matchvalue", matchArray[i]);
+		$("#showProfile").append(matchButton);
+	}
+}
+
+profilePath.once('value', function(snapshot) {
+  snapshot.forEach(function(childSnapshot) {
+    var childKey = childSnapshot.key;
+		var childData = childSnapshot.val();
+		console.log(childKey);
+		console.log(childData);
+		
+    // ...
+  });
+});
