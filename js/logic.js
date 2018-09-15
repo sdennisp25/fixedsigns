@@ -220,13 +220,56 @@ function renderButtons() {
 	}
 }
 
-profilePath.once('value', function(snapshot) {
-  snapshot.forEach(function(childSnapshot) {
-    var childKey = childSnapshot.key;
-		var childData = childSnapshot.val();
-		console.log(childKey);
-		console.log(childData);
-		
-    // ...
-  });
-});
+$(document).on("click", "#matchBtn", function(){
+	let sign = $(this).attr("data-matchvalue")
+	getMatches(sign)
+})
+
+function getMatches(sign){
+console.log(sign);
+	profilePath.orderByChild('sunSign').equalTo(sign).on('value', (res) => {
+		console.log('res: ', res.val());
+		res = res.val();
+		for (var key in res) {
+			console.log(res[key].firstName)
+		}
+	});
+
+
+
+	// reference///
+// 	var playersRef = firebase.database().ref("players/");
+
+// playersRef.orderByChild("name").on("child_added", function(data) {
+//    console.log(data.val().name);
+// });
+
+
+	// database.collection('profiles').where("sunSign", "==", sign)
+  //   .get()
+  //   .then(function(querySnapshot) {
+  //       querySnapshot.forEach(function(doc) {
+  //           // doc.data() is never undefined for query doc snapshots
+  //           console.log(doc.id, " => ", doc.data());
+  //       });
+  //   })
+  //   .catch(function(error) {
+  //       console.log("Error getting documents: ", error);
+	//   });
+	
+
+	// profilePath.orderByChild("sunSign").equalTo(sign).on("value", function (snapshot){
+	// 	snapshot.forEach(function(childSnapshot) {
+	// 		var childKey = childSnapshot.key;
+	// 		var childData = childSnapshot.val();
+	// 		let match = $('<div>')
+	// 		match.text(childData.firstName)
+	// 		$('#matches').append(match)
+	// 		console.log(childKey);
+	// 		console.log(childData);
+			
+	// 		// ...
+	// 	});
+	// });
+
+}
