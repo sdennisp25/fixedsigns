@@ -32,6 +32,7 @@ var $aboutYou;
 var match1;
 var match2;
 var match3;
+var matchArray
 
 
 //FIREBASE AUTHS - CREATE ACCOUNT, LOGIN, LOGOUT, USER STATUS CHANGE//
@@ -206,3 +207,6 @@ function bestMatches() {
 	} 
 } 
 
+function renderButtons (){
+
+}
