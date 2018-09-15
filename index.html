@@ -12,23 +12,22 @@
 
 <body>
 	<!-- Create Navbar -->
-	<nav class="navbar navbar-expand-sm navbar-dark bg-dark border-bottom">
-		<div class="container">
+	<nav class="navbar navbar-expand-sm navbar-blue bg-dark border-bottom">
+		<div class="container-fluid">
 
 			<!-- Brand -->
-			<div class="navbar-brand font-weight-bold">Fixed Signs</div>
 			<div class="collapse navbar-collapse">
 				<!-- links -->
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
-						<a href="./index.html" class="nav-link" id="homePage"><strong>Home</strong></a>
-					</li>
-					<li class="nav-item">
-						<a href="./profile.html" class="nav-link" id="profile"><strong>Profile</strong></a>
+						<a href="./index.html" class="nav-link navbar-brand font-weight-bold" id="homePage"><strong>Fixed Signs</strong></a>
 					</li>
 				</ul>
 				<!-- Register/Login/Logout -->
 				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a href="./profile.html" class="nav-link" id="profile"><strong>Your Profile</strong></a>
+					</li>
 					<li class="nav-item">
 						<a href="" class="nav-link" id="showSignUp" data-toggle="modal" data-target="#signUpModal"><strong>Sign Up</strong></a>
 					</li>
@@ -102,27 +101,12 @@
 	<!-- LOGIN MODAL- END -->
 
 	<!-- Page Content Start -->
-	<div class="container">
-		<div class="row">
-			<!-- Display User Profile, Etc -->
-			<div class="col-md-9">
-				<div class="card">
-					<div class="card-header">
-						<h1 class="text-center">Your Profile</h1>
-					</div>
-					<div class="card-body" id="showProfile">
-					</div>
-				</div>
+	<div class="container-fluid bg-1 text-center">
+	<!-- Display User Profile, Etc -->
+			<h1 class="sun-sign">Your sign</h1>
+			<img src="images/aries2.png" alt="lion" class="img-circle" width="250" height="200">
+			<div class="" id="showProfile">
 			</div>
-
-			<!-- Chat Box -->
-			<div class="col-md-3">
-				<div id="chat">
-					<div id="displayMessage"></div>
-				</div>
-				<textarea class="form-control" id="typeMessage" placeholder="Type your message..."></textarea>
-			</div>
-		</div>
 	</div>
 	<!-- Page Content End-->
 
