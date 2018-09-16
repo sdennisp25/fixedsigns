@@ -34,6 +34,9 @@ var match2;
 var match3;
 var matchArray = [];
 var matchSeeking;
+var matchSign;
+var matchName;
+var matchAbout;
 
 
 //FIREBASE AUTHS - CREATE ACCOUNT, LOGIN, LOGOUT, USER STATUS CHANGE//
@@ -68,8 +71,7 @@ $signOut.on("click", function () {
 	event.preventDefault();
 	firebase.auth().signOut().then(function () {
 		console.log("Sign Out Successful");
-		$showLogin.show();
-		$showSignUp.show();
+		location.reload();
 		matchArray = [];
 	}).catch(function (error) {
 		console.log("Error Signing Out");
@@ -106,7 +108,7 @@ function setProfile() {
 	var $birthday = $("#bday").val();
 	var $sunSign = $("#sunSign").val();
 	var $aboutYou = $("#aboutYou").val();
-	
+
 	var user = firebase.auth().currentUser;
 	var userProfile = {
 		aboutYou: $aboutYou,
@@ -124,8 +126,7 @@ function setProfile() {
 }
 
 database.ref("/profile").on("child_added", function (snapshot) {
-	console.log(snapshot.val());
-	
+	// console.log(snapshot.val());
 })
 
 //Retrieve the user's profile information from Firebase//
@@ -142,7 +143,8 @@ function getProfile(snapshot) {
 	$aboutYou = profile.aboutYou;
 	console.log($firstName, $lastName, $sunSign, $gender, $seeking, $aboutYou);
 	//Display profile information in the DOM as needed
-	$(".sun-sign").html("Hello, " + $firstName +"!" +"<br>" + " You're a " +$sunSign);
+	$(".sun-sign").html($sunSign);
+	$("#showProfile").html("Name: "+ $firstName + "<br>" + "Gender: "+ $gender + "<br>" + "About Me: "+ $aboutYou);
 	bestMatches($sunSign);
 	console.log("Matches: " + match1 + " " + match2 + " " + match3);
 }
@@ -206,16 +208,16 @@ function bestMatches() {
 //CREATE BUTTONS IN DOM WHICH CARRY MATCH1-3 VALUES AS THEIR DATA-PROPERTY
 function renderButtons() {
 	for (var i = 0; i < matchArray.length; i++) {
-		var matchButton = $("<button>");
-		matchButton.attr("id", "matchBtn");
-		matchButton.attr("data-matchvalue", matchArray[i]);
-		$("#showProfile").append(matchButton);
+		var matchButtons = $("<button>");
+		matchButtons.attr("id", "matchBtn");
+		matchButtons.attr("data-matchvalue", matchArray[i]);
+		$("#displayButtons").append(matchButtons);
 	}
 }
 
 //CLICKING ON A MATCH BUTTON DISPLAYS USER PROFILES THAT HAVE THAT SIGN
 $(document).on("click", "#matchBtn", function () {
-	let sign = $(this).attr("data-matchvalue")
+	var sign = $(this).attr("data-matchvalue")
 	getMatches(sign)
 })
 
@@ -231,22 +233,35 @@ function getMatches(sign) {
 			var matchGender = matchData.gender;
 			var matchSeeking = matchData.relationship;
 			var matchAbout = matchData.aboutYou;
-			console.log("Match info: " + matchName + " " + matchSign + " " + matchGender + " " + matchSeeking + " " + matchAbout);
+			// console.log("Match info: " + matchName + " " + matchSign + " " + matchGender + " " + matchSeeking + " " + matchAbout);
 			//Sort Profiles for Gender Preferences//
 			function sortByGender() {
 				if (($seeking === "f/m") && (matchSeeking === "m/f")) {
 					console.log(matchName);
+					matchTable();
 				} else if ($seeking === "m/f" && matchSeeking === "f/m") {
 					console.log(matchName);
+					matchTable();
 				} else if ($seeking === "m/m" && matchSeeking === "m/m") {
 					console.log(matchName);
+					matchTable();
 				} else if ($seeking === "f/f" && matchSeeking === "f/f") {
 					console.log(matchName);
+					matchTable();
 				} else { }
+			}
+			function matchTable() {
+				var newRow = $("<tr>").append(
+					$("<td>").text(matchSign),
+					$("<td>").text(matchName),
+					$("<td>").text(matchAbout),
+				)
+				//Add the new row to the table body
+				$("tbody").append(newRow);
 			}
 			sortByGender();
 		});
-});
+	});
 }
 
 // DO WE NEED THIS? Or can this be included in getProfile Function?//
