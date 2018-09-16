@@ -141,7 +141,9 @@ function getProfile(snapshot) {
 	$gender = profile.gender;
 	$seeking = profile.relationship;
 	$aboutYou = profile.aboutYou;
-	console.log($firstName, $lastName, $sunSign, $gender, $seeking, $aboutYou);
+	userID = profile.userID;
+	displayName = profile.displayName;
+	// console.log($firstName, $lastName, $sunSign, $gender, $seeking, $aboutYou, userID, displayName);
 	//Display profile information in the DOM as needed
 	$(".sun-sign").html($sunSign);
 	$("#showProfile").html("Name: " + $firstName + "<br>" + "Gender: " + $gender + "<br>" + "About Me: " + $aboutYou);
@@ -253,7 +255,8 @@ function getMatches(sign) {
 			}
 			function matchTable() {
 				var contactBtn = $("<button>")
-				contactBtn.attr("data-matchID", matchID);
+				contactBtn.attr("data-matchid", matchID);
+				contactBtn.attr("id", "contactBtn");
 				var deleteBtn = $("<button>");
 				var newRow = $("<tr>").append(
 					$("<td>").text(matchSign),
@@ -269,6 +272,33 @@ function getMatches(sign) {
 		});
 	});
 }
+////////////////PLAY WITH CHAT FUNCTION////////////////
+$(document).on("click", "#contactBtn", function () {
+	var matchValue = $(this).attr("data-matchid");
+	setChatIds(matchValue);
+})
+function setChatIds(matchValue){
+	console.log(matchValue);
+	console.log(userID);
+}
+
+
+// function chat() {
+// 	$('#typeMessage').keypress(function (e) {
+// 		if (e.keyCode == 13) {
+// 			var sender = displayName;
+// 			var text = $('#typeMessage').val();
+// 			var chatMessage = {
+// 				sender: sender,
+// 				text: text,
+// 				time: firebase.database.ServerValue.TIMESTAMP,
+// 			}
+// 			database.ref("/chats").push().set(chatMessage);
+// 			console.log(chatMessage);
+// 		}
+
+// 	});
+// }
 
 // DO WE NEED THIS? Or can this be included in getProfile Function?//
 // function displayUser() {
