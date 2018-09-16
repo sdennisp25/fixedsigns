@@ -144,7 +144,7 @@ function getProfile(snapshot) {
 	console.log($firstName, $lastName, $sunSign, $gender, $seeking, $aboutYou);
 	//Display profile information in the DOM as needed
 	$(".sun-sign").html($sunSign);
-	$("#showProfile").html("Name: "+ $firstName + "<br>" + "Gender: "+ $gender + "<br>" + "About Me: "+ $aboutYou);
+	$("#showProfile").html("Name: " + $firstName + "<br>" + "Gender: " + $gender + "<br>" + "About Me: " + $aboutYou);
 	bestMatches($sunSign);
 	console.log("Matches: " + match1 + " " + match2 + " " + match3);
 }
@@ -233,6 +233,7 @@ function getMatches(sign) {
 			var matchGender = matchData.gender;
 			var matchSeeking = matchData.relationship;
 			var matchAbout = matchData.aboutYou;
+			var matchID = matchData.userID;
 			// console.log("Match info: " + matchName + " " + matchSign + " " + matchGender + " " + matchSeeking + " " + matchAbout);
 			//Sort Profiles for Gender Preferences//
 			function sortByGender() {
@@ -251,10 +252,15 @@ function getMatches(sign) {
 				} else { }
 			}
 			function matchTable() {
+				var contactBtn = $("<button>")
+				contactBtn.attr("data-matchID", matchID);
+				var deleteBtn = $("<button>");
 				var newRow = $("<tr>").append(
 					$("<td>").text(matchSign),
 					$("<td>").text(matchName),
 					$("<td>").text(matchAbout),
+					$("<td>").append(contactBtn),
+					$("<td>").append(deleteBtn),
 				)
 				//Add the new row to the table body
 				$("tbody").append(newRow);
