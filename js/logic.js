@@ -36,8 +36,24 @@ var matchArray = [];
 var matchSeeking;
 var matchSign;
 var matchName;
+var matchEmail;
 var matchAbout;
+var matchID;
+var matchDisplayName;
+var denier;
+var denierID;
+var denied;
+var deniedID;
+// var rejectee;
+var rejecteeID;
+// var rejector;
+// var rejectorID;
 
+
+// ////Parsley.js////
+// $(document).ready(function () {
+// 	$("#accountForm").parsley();
+// });
 
 //FIREBASE AUTHS - CREATE ACCOUNT, LOGIN, LOGOUT, USER STATUS CHANGE//
 //Create a Firebase User using Navbar-Register
@@ -100,7 +116,9 @@ $("#profileSubmit").on("click", function () {
 	setProfile();
 })
 
+//TAKE THE VALUES FROM THE PROFILE FORM AND SEND TO FIREBASE PROFILE FOLDER
 function setProfile() {
+	//Retrieve Values//
 	var $firstName = $("#fname").val().trim();
 	var $lastName = $("#lname").val().trim();
 	var $gender = $("input[name='gender']:checked").val();
@@ -108,7 +126,6 @@ function setProfile() {
 	var $birthday = $("#bday").val();
 	var $sunSign = $("#sunSign").val();
 	var $aboutYou = $("#aboutYou").val();
-
 	var user = firebase.auth().currentUser;
 	var userProfile = {
 		aboutYou: $aboutYou,
@@ -118,19 +135,20 @@ function setProfile() {
 		sunSign: $sunSign,
 		lastName: $lastName,
 		firstName: $firstName,
+		userEmail: user.email,
 		userID: user.uid,
 		displayName: user.displayName
 	};
+	//Push to Firebase location
 	database.ref("/profile").push().set(userProfile);
 	console.log(userProfile);
+	//LISTEN for new additions to the PROFILE folder in Firebase
+	database.ref("/profile").on("child_added", function (snapshot) {
+		// console.log(snapshot.val());
+	})
 }
 
-database.ref("/profile").on("child_added", function (snapshot) {
-	// console.log(snapshot.val());
-})
-
-//Retrieve the user's profile information from Firebase//
-//Call this on the AuthStateChange function//
+//RETRIEVE THE USER'S PROFILE FROM FIREBASE///Call this on the AuthStateChange function//
 function getProfile(snapshot) {
 	var sv = snapshot.val();
 	var keys = Object.keys(sv);
@@ -143,6 +161,7 @@ function getProfile(snapshot) {
 	$aboutYou = profile.aboutYou;
 	userID = profile.userID;
 	displayName = profile.displayName;
+	userEmail = profile.userEmail;
 	// console.log($firstName, $lastName, $sunSign, $gender, $seeking, $aboutYou, userID, displayName);
 	//Display profile information in the DOM as needed
 	$(".sun-sign").html($sunSign);
@@ -151,7 +170,7 @@ function getProfile(snapshot) {
 	console.log("Matches: " + match1 + " " + match2 + " " + match3);
 }
 
-//FUNCTION TO DETERMINE MOST COMPATIBLE SIGNS
+//DETERMINE MOST COMPATIBLE SIGNS
 function bestMatches() {
 	if ($sunSign === "Aquarius") {
 		match1 = "Aries";
@@ -202,6 +221,7 @@ function bestMatches() {
 		match2 = "Virgo";
 		match3 = "Scorpio";
 	}
+	//PUSH MATCHES INTO AN ARRAY, THEN RENDER BUTTONS FOR EACH MATCH
 	matchArray.push(match1, match2, match3);
 	console.log(matchArray);
 	renderButtons();
@@ -223,6 +243,7 @@ $(document).on("click", "#matchBtn", function () {
 	getMatches(sign)
 })
 
+//RETRIEVE PROFILES FOR THE SUNSIGN SELECTED/
 function getMatches(sign) {
 	console.log(sign);
 	profilePath.orderByChild("sunSign").equalTo(sign).once("value").then(function (snapshot) {
@@ -230,89 +251,121 @@ function getMatches(sign) {
 			var matchData = data.val();
 			// var key = data.key;
 			console.log(matchData);
-			var matchName = matchData.firstName;
-			var matchSign = matchData.sunSign;
-			var matchGender = matchData.gender;
-			var matchSeeking = matchData.relationship;
-			var matchAbout = matchData.aboutYou;
-			var matchID = matchData.userID;
+			matchName = matchData.firstName;
+			matchSign = matchData.sunSign;
+			matchSeeking = matchData.relationship;
+			matchAbout = matchData.aboutYou;
+			matchID = matchData.userID;
+			matchEmail = matchData.userEmail;
+			matchDisplayName = matchData.displayName;
 			// console.log("Match info: " + matchName + " " + matchSign + " " + matchGender + " " + matchSeeking + " " + matchAbout);
 			//Sort Profiles for Gender Preferences//
-			function sortByGender() {
-				if (($seeking === "f/m") && (matchSeeking === "m/f")) {
-					console.log(matchName);
-					matchTable();
-				} else if ($seeking === "m/f" && matchSeeking === "f/m") {
-					console.log(matchName);
-					matchTable();
-				} else if ($seeking === "m/m" && matchSeeking === "m/m") {
-					console.log(matchName);
-					matchTable();
-				} else if ($seeking === "f/f" && matchSeeking === "f/f") {
-					console.log(matchName);
-					matchTable();
-				} else { }
-			}
-			function matchTable() {
-				var contactBtn = $("<button>")
-				contactBtn.attr("data-matchid", matchID);
-				contactBtn.attr("id", "contactBtn");
-				var deleteBtn = $("<button>");
-				var newRow = $("<tr>").append(
-					$("<td>").text(matchSign),
-					$("<td>").text(matchName),
-					$("<td>").text(matchAbout),
-					$("<td>").append(contactBtn),
-					$("<td>").append(deleteBtn),
-				)
-				//Add the new row to the table body
-				$("tbody").append(newRow);
-			}
 			sortByGender();
+			setExclusions();
 		});
 	});
+
+	//SORT PROFILE MATCHES BASED ON TYPE OF RELATIONSHIP BEING SAUGHT
+	function sortByGender() {
+		if (($seeking === "f/m") && (matchSeeking === "m/f")) {
+			console.log(matchName);
+			matchTable();
+		} else if ($seeking === "m/f" && matchSeeking === "f/m") {
+			console.log(matchName);
+			matchTable();
+		} else if ($seeking === "m/m" && matchSeeking === "m/m") {
+			console.log(matchName);
+			matchTable();
+		} else if ($seeking === "f/f" && matchSeeking === "f/f") {
+			console.log(matchName);
+			matchTable();
+		} else { }
+	}
 }
-////////////////PLAY WITH CHAT FUNCTION////////////////
-$(document).on("click", "#contactBtn", function () {
-	var matchValue = $(this).attr("data-matchid");
-	setChatIds(matchValue);
-})
-function setChatIds(matchValue){
-	console.log(matchValue);
-	console.log(userID);
+
+//APPEND THE SORTED MATCHES TO THE MATCH TABLE IN THE DOM
+function matchTable() {
+	// var contactBtn = $("<button>")
+	// contactBtn.attr("data-matchid", matchID);
+	// contactBtn.attr("id", "contactBtn");
+	//CREATE A LINK THAT WILL ALLOW USERS TO EMAIL A MATCH//
+	var contactLink = $("<a>");
+	contactLink.text("Send Email");
+	contactLink.attr("href", "Mailto:" + matchEmail);
+	//CREATE A BUTTON THAT ALLOWS THE USER TO REMOVE A MATCH//
+	var excludeBtn = $("<button>");
+	excludeBtn.attr("data-matchid", matchID);
+	excludeBtn.attr("id", "excludeBtn");
+	var newRow = $("<tr>")
+	newRow.attr("data-rowid", matchID).append(
+		$("<td>").text(matchSign),
+		$("<td>").text(matchName),
+		$("<td>").text(matchAbout),
+		$("<td>").append(contactLink),
+		$("<td>").append(excludeBtn),
+	)
+	//Add the new row to the table body
+	$("tbody").append(newRow);
+	//DO NOT DISPLAY ANY MATCHES WHERE THE USER REMOVED A MATCH OR HAS BEEN REMOVED//
+	checkIfMatchAllowed(userID);
 }
 
+//IF USERS CLICKS "REMOVE" BUTTON, PROFILE REMOVED FROM DOM & SENT TO EXCLUDED FILE IN FIREBASE
+function setExclusions() {
+	$("#excludeBtn").on("click", function () {
+		this.closest("tr").remove();
+		denier = displayName;
+		denierID = userID;
+		denied = matchDisplayName;
+		deniedID = matchID;
+		console.log(denier + " denies: " + denied);
+		var deniedPair = {
+			denier: denier,
+			denierID: denierID,
+			denied: denied,
+			deniedID: deniedID,
+		}
+		database.ref("/excluded").push().set(deniedPair);
+	});
+	database.ref("/excluded").on("child_added", function (snapshot) {
+	});
+}
 
-// function chat() {
-// 	$('#typeMessage').keypress(function (e) {
-// 		if (e.keyCode == 13) {
-// 			var sender = displayName;
-// 			var text = $('#typeMessage').val();
-// 			var chatMessage = {
-// 				sender: sender,
-// 				text: text,
-// 				time: firebase.database.ServerValue.TIMESTAMP,
-// 			}
-// 			database.ref("/chats").push().set(chatMessage);
-// 			console.log(chatMessage);
-// 		}
-
-// 	});
-// }
-
-// DO WE NEED THIS? Or can this be included in getProfile Function?//
-// function displayUser() {
-// 	var user = firebase.auth().currentUser;
-// 	var displayName, email, photoUrl, uid;
-// 	if (user != null) {
-// 		displayName = user.displayName;
-// 		email = user.email;
-// 		photoUrl = user.photoURL;
-// 		uid = user.uid;
-// 		$("#showProfile").html(displayName + "<br>" + email);
-// 	}
-// }
-
+//CONFIRM NO MATCHES DISPLAY THAT ARE ALREADY IN THE EXCLUDED PAIRS FOLDER IN FIREBASE//
+function checkIfMatchAllowed(userID) {
+	//CHECK FIRST TO SEE IF USER DENIED ANY MATCHES//
+	database.ref("/excluded").orderByChild("denierID").equalTo(userID).once("value").then(function (snapshot) {
+		snapshot.forEach(function (sv) {
+			var sv = sv.val();;
+			console.log(sv);
+			denier = sv.denier;
+			denierID = sv.denierID;
+			denied = sv.denied;
+			deniedID = sv.deniedID;
+			console.log(denier + " denied " + denied);
+		});
+		//THEN CHECK IF THE USER HAS BEEN DENIED BY ANOTHER USER//
+		checkForDenied(userID);
+	});
+	function checkForDenied(userID) {
+		database.ref("/excluded").orderByChild("deniedID").equalTo(userID).once("value").then(function (snapshot) {
+			snapshot.forEach(function (sv) {
+				var sv = sv.val();;
+				console.log(sv);
+				var rejector = sv.denier;
+				// var rejectorID = sv.denierID;
+				var rejectee = sv.denied;
+				rejecteeID = sv.deniedID;
+				console.log(rejector + " denied " + rejectee);
+			});
+			//HIDE ROWS ON THE MATCH TABLE//
+			if ((userID === rejecteeID) || (matchID === deniedID)) {
+				console.log("no match allowed");
+				$("tr[data-rowid=" + matchID+"]").hide();
+			}
+		});
+	}
+}
 
 ///////////////////REFERENCES CODE/////////////////////////////
 //REFERENCE: LOOP Attempt - Returned most recent value only - switched to forEach
