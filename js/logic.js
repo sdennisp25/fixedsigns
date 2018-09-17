@@ -112,6 +112,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 ///SUBMIT PROFILE AND SET IN FIREBASE//
 $("#profileSubmit").on("click", function () {
+	window.location.href = "./index.html";
 	event.preventDefault();
 	setProfile();
 })
