@@ -228,6 +228,7 @@ function bestMatches() {
 	renderButtons();
 }
 
+
 //CREATE BUTTONS IN DOM WHICH CARRY MATCH1-3 VALUES AS THEIR DATA-PROPERTY
 function renderButtons() {
 	for (var i = 0; i < matchArray.length; i++) {
@@ -238,10 +239,24 @@ function renderButtons() {
 	}
 }
 
+//----------------------------------------------------
+//pulls from the soundapi.js api to pull sound
+var key = "4xpUB6VVkPsCPCmEeeyydBPJ47x4PWetDO6VrWnM";
+window.onload = function () {
+	freesound.setToken(key);
+};
+
+//----------------------------------------------------
+var signSound;
+
 //CLICKING ON A MATCH BUTTON DISPLAYS USER PROFILES THAT HAVE THAT SIGN
 $(document).on("click", "#matchBtn", function () {
-	var sign = $(this).attr("data-matchvalue")
+	var sign = $(this).attr("data-matchvalue");
+	signSound = $(this).attr("data-matchvalue");
 	getMatches(sign)
+	if (sign === "aries"){
+		signSound = "piano";
+	}
 })
 
 //RETRIEVE PROFILES FOR THE SUNSIGN SELECTED/
@@ -263,8 +278,36 @@ function getMatches(sign) {
 			//Sort Profiles for Gender Preferences//
 			sortByGender();
 			setExclusions();
+
+//----------------------------------------------------
+			//Needs a value to be passed through to pull a specific sound effect, else it would play whatevers on the window
+			//also need to make sure that only one button will be played at a time
+			// var sound = $(this).attr("data-matchvalue");
+			console.log("SOUND: ", signSound);
+			var queryURL = "https://freesound.org/apiv2/search/text/?query=" + signSound + "&token=" + key;
+
+
+			$.ajax({
+				url: queryURL,
+				method: "GET"
+			}).then(function (response) {
+				var d = response.results[1].id
+
+				freesound.getSound(d, function (sound) {
+					//grab my audio tag and add mp3
+					var test = sound.previews["preview-hq-mp3"];
+					var a = new Audio(test);
+					a.play();
+					console.log("Sound URL: ", test);
+					console.log("a: ", a);
+					console.log("test: ", sound);
+
+				})
+			})
 		});
 	});
+//----------------------------------------------------
+
 
 	//SORT PROFILE MATCHES BASED ON TYPE OF RELATIONSHIP BEING SAUGHT
 	function sortByGender() {
@@ -362,7 +405,7 @@ function checkIfMatchAllowed(userID) {
 			//HIDE ROWS ON THE MATCH TABLE//
 			if ((userID === rejecteeID) || (matchID === deniedID)) {
 				console.log("no match allowed");
-				$("tr[data-rowid=" + matchID+"]").hide();
+				$("tr[data-rowid=" + matchID + "]").hide();
 			}
 		});
 	}
