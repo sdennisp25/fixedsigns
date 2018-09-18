@@ -1,6 +1,10 @@
+.profile-body {
+	background-color: rgb(194, 230, 244);
+}
 #content {
 	width: 960px;
 	margin: 0 auto;
+	background-color: rgb(194, 230, 244);
 }
 
 nav {
@@ -30,13 +34,23 @@ background-color: #00A3CC;
 	font-family: Arial, Helvetica, sans-serif;
 }
 
+.img-circle {
+	width: 200px;
+	height: 200px;
+}
+
 .descript {
 	background-color: rgb(96, 143, 244);
 	color: white;
+	border-radius: 25px;
 }
 
-.compat {
-	background-color: rgb(194, 230, 244);
+.btn {
+
+}
+
+.sun-sign {
+	font-size: 80px;
 }
 	
 #chat{
@@ -62,3 +76,4 @@ background-color: #00A3CC;
 	border-radius: 7px 7px 7px 1px;
 	font-size: 18px;
 }
+
