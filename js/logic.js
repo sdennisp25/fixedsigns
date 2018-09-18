@@ -239,8 +239,10 @@ function renderButtons() {
 }
 
 //CLICKING ON A MATCH BUTTON DISPLAYS USER PROFILES THAT HAVE THAT SIGN
-$(document).on("click", "#matchBtn", function () {
-	var sign = $(this).attr("data-matchvalue")
+$(document).on("click", "#matchBtn", function (event) {
+	event.preventDefault();
+	var sign = $(this).attr("data-matchvalue");
+	console.log(sound);
 	getMatches(sign)
 })
 
@@ -313,24 +315,24 @@ function matchTable() {
 
 //IF USERS CLICKS "REMOVE" BUTTON, PROFILE REMOVED FROM DOM & SENT TO EXCLUDED FILE IN FIREBASE
 function setExclusions() {
-	$("#excludeBtn").on("click", function () {
-		this.closest("tr").remove();
-		denier = displayName;
-		denierID = userID;
-		denied = matchDisplayName;
-		deniedID = matchID;
-		console.log(denier + " denies: " + denied);
-		var deniedPair = {
-			denier: denier,
-			denierID: denierID,
-			denied: denied,
-			deniedID: deniedID,
-		}
-		database.ref("/excluded").push().set(deniedPair);
-	});
-	database.ref("/excluded").on("child_added", function (snapshot) {
-	});
 }
+$(document).on("click", "#excludeBtn", function () {
+	this.closest("tr").remove();
+	var denier = displayName;
+	var denierID = userID;
+	var denied = matchDisplayName;
+	var deniedID = matchID;
+	console.log(denier + " denies: " + denied);
+	var deniedPair = {
+		denier: denier,
+		denierID: denierID,
+		denied: denied,
+		deniedID: deniedID,
+	}
+	database.ref("/excluded").push().set(deniedPair);
+});
+database.ref("/excluded").on("child_added", function (snapshot) {
+});
 
 //CONFIRM NO MATCHES DISPLAY THAT ARE ALREADY IN THE EXCLUDED PAIRS FOLDER IN FIREBASE//
 function checkIfMatchAllowed(userID) {
@@ -362,7 +364,7 @@ function checkIfMatchAllowed(userID) {
 			//HIDE ROWS ON THE MATCH TABLE//
 			if ((userID === rejecteeID) || (matchID === deniedID)) {
 				console.log("no match allowed");
-				$("tr[data-rowid=" + matchID+"]").hide();
+				$("tr[data-rowid=" + matchID + "]").hide();
 			}
 		});
 	}
