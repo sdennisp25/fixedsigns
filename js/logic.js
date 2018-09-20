@@ -165,12 +165,13 @@ function getProfile(snapshot) {
 	userEmail = profile.userEmail;
 	//Display profile information in the DOM as needed
 	$(".sun-sign").html($sunSign);
-	$("#sunSignPic").attr("src", "images/" + $sunSign + ".png");
+	$("#sunSignPic").attr("src", "./images/" + $sunSign+ ".png");
 	$("#showProfile").html("Name: " + $firstName + "<br>" + "Gender: " + $gender + "<br>" + "About Me: " + $aboutYou);
-	// $("#signDescription").attr("src", "sign-data/" + $sunSign + ".png");
+	$("#signDescription").html(description[$sunSign]);
 	bestMatches($sunSign);
 	console.log("Matches: " + match1 + " " + match2 + " " + match3);
 }
+
 
 //DETERMINE MOST COMPATIBLE SIGNS
 function bestMatches() {
