@@ -33,6 +33,7 @@ var match1;
 var match2;
 var match3;
 var matchArray = [];
+var soundArray = [];
 var matchSeeking;
 var matchSign;
 var matchName;
@@ -226,7 +227,8 @@ function bestMatches() {
 	}
 	//PUSH MATCHES INTO AN ARRAY, THEN RENDER BUTTONS FOR EACH MATCH
 	matchArray.push(match1, match2, match3);
-	// console.log(matchArray);
+	console.log("Your Sound: ", signSound);
+	console.log(matchArray);
 	renderButtons();
 }
 
@@ -255,9 +257,57 @@ $(document).on("click", "#matchBtn", function () {
 	event.preventDefault();
 	var sign = $(this).attr("data-matchvalue");
 	signSound = $(this).attr("data-matchvalue");
-	getMatches(sign);
-	if (sign === "aries") {
-		signSound = "piano";
+	console.log(sign);
+	getMatches(sign)
+
+//THESE WILL RE-ASSIGN THE SOUND VALUE TO HAVE IT PASSED THROUGH THE API TO PULL THE SOUND
+	if (sign === "Aquarius"){
+		signSound = "water";
+		console.log("AFTER BUTTON IS CLICKED: ", signSound);
+	}
+	else if (sign === "Pisces"){
+		signSound = "fish";
+		console.log("AFTER BUTTON IS CLICKED: ", signSound);
+	}
+	else if (sign === "Aries"){
+		signSound = "yelling";
+		console.log("AFTER BUTTON IS CLICKED: ", signSound);
+	}
+	else if (sign === "Taurus"){
+		signSound = "smash";
+		console.log("AFTER BUTTON IS CLICKED: ", signSound);
+	}
+	else if (sign === "Gemini"){
+		signSound = "talking";
+		console.log("AFTER BUTTON IS CLICKED: ", signSound);
+	}
+	else if (sign === "Cancer"){
+		signSound = "digging";
+		console.log("AFTER BUTTON IS CLICKED: ", signSound);
+	}
+	else if (sign === "Leo"){
+		signSound = "roar";
+		console.log("AFTER BUTTON IS CLICKED: ", signSound);
+	}
+	else if (sign === "Virgo"){
+		signSound = "swords";
+		console.log("AFTER BUTTON IS CLICKED: ", signSound);
+	}
+	else if (sign === "Libra"){
+		signSound = "weights";
+		console.log("AFTER BUTTON IS CLICKED: ", signSound);
+	}
+	else if (sign === "Scorpio"){
+		signSound = "bugs";
+		console.log("AFTER BUTTON IS CLICKED: ", signSound);
+	}
+	else if (sign === "Sagittarius"){
+		signSound = "horses";
+		console.log("AFTER BUTTON IS CLICKED: ", signSound);
+	}
+	else if (sign === "Capricorn"){
+		signSound = "goat";
+		console.log("AFTER BUTTON IS CLICKED: ", signSound);
 	}
 })
 
@@ -289,7 +339,7 @@ function getMatches(sign) {
 				url: queryURL,
 				method: "GET"
 			}).then(function (response) {
-				var d = response.results[1].id
+				var d = response.results[0].id
 
 				freesound.getSound(d, function (sound) {
 					//grab my audio tag and add mp3
