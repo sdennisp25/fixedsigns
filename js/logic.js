@@ -239,7 +239,9 @@ function renderButtons() {
 		matchButtons.attr("id", "matchBtn");
 		matchButtons.attr("data-matchvalue", matchArray[i]);
 		matchButtons.attr("src", "images/" + matchArray[i] + ".png");
-		$("#displayButtons").append(matchButtons);
+		var matchName = $("<h3>")
+		matchName.html(matchArray[i]);
+		$("#displayButtons").append(matchButtons, matchName);
 	}
 }
 
