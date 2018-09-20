@@ -259,54 +259,42 @@ $(document).on("click", "#matchBtn", function (event) {
 	console.log(sign);
 	getMatches(sign)
 
-//THESE WILL RE-ASSIGN THE SOUND VALUE TO HAVE IT PASSED THROUGH THE API TO PULL THE SOUND
-	if (sign === "Aquarius"){
+	//THESE WILL RE-ASSIGN THE SOUND VALUE TO HAVE IT PASSED THROUGH THE API TO PULL THE SOUND
+	if (sign === "Aquarius") {
 		signSound = "water";
-		console.log("AFTER BUTTON IS CLICKED: ", signSound);
 	}
-	else if (sign === "Pisces"){
+	else if (sign === "Pisces") {
 		signSound = "fish";
-		console.log("AFTER BUTTON IS CLICKED: ", signSound);
 	}
-	else if (sign === "Aries"){
+	else if (sign === "Aries") {
 		signSound = "yelling";
-		console.log("AFTER BUTTON IS CLICKED: ", signSound);
 	}
-	else if (sign === "Taurus"){
+	else if (sign === "Taurus") {
 		signSound = "smash";
-		console.log("AFTER BUTTON IS CLICKED: ", signSound);
 	}
-	else if (sign === "Gemini"){
+	else if (sign === "Gemini") {
 		signSound = "talking";
-		console.log("AFTER BUTTON IS CLICKED: ", signSound);
 	}
-	else if (sign === "Cancer"){
+	else if (sign === "Cancer") {
 		signSound = "digging";
-		console.log("AFTER BUTTON IS CLICKED: ", signSound);
 	}
-	else if (sign === "Leo"){
+	else if (sign === "Leo") {
 		signSound = "roar";
-		console.log("AFTER BUTTON IS CLICKED: ", signSound);
 	}
-	else if (sign === "Virgo"){
+	else if (sign === "Virgo") {
 		signSound = "swords";
-		console.log("AFTER BUTTON IS CLICKED: ", signSound);
 	}
-	else if (sign === "Libra"){
+	else if (sign === "Libra") {
 		signSound = "weights";
-		console.log("AFTER BUTTON IS CLICKED: ", signSound);
 	}
-	else if (sign === "Scorpio"){
+	else if (sign === "Scorpio") {
 		signSound = "bugs";
-		console.log("AFTER BUTTON IS CLICKED: ", signSound);
 	}
-	else if (sign === "Sagittarius"){
+	else if (sign === "Sagittarius") {
 		signSound = "horses";
-		console.log("AFTER BUTTON IS CLICKED: ", signSound);
 	}
-	else if (sign === "Capricorn"){
+	else if (sign === "Capricorn") {
 		signSound = "goat";
-		console.log("AFTER BUTTON IS CLICKED: ", signSound);
 	}
 })
 
@@ -330,7 +318,7 @@ function getMatches(sign) {
 			sortByGender();
 			setExclusions();
 
-//----------------------------------------------------
+			//----------------------------------------------------
 			//Needs a value to be passed through to pull a specific sound effect, else it would play whatevers on the window
 			//also need to make sure that only one button will be played at a time
 			// var sound = $(this).attr("data-matchvalue");
@@ -357,7 +345,7 @@ function getMatches(sign) {
 			})
 		});
 	});
-//----------------------------------------------------
+	//----------------------------------------------------
 
 
 	//SORT PROFILE MATCHES BASED ON TYPE OF RELATIONSHIP BEING SAUGHT
@@ -461,35 +449,3 @@ function checkIfMatchAllowed(userID) {
 		});
 	}
 }
-
-///////////////////REFERENCES CODE/////////////////////////////
-//REFERENCE: LOOP Attempt - Returned most recent value only - switched to forEach
-// 	profilePath.orderByChild("sunSign").equalTo(sign).on("value", function (matchData) {
-	//  console.log('snapshot: ', matchData.val());
-	// 		matchData = matchData.val();
-	// 		for (var key in matchData) {
-		// 			var matchName = matchData[key].firstName;
-		// 			var matchSign = matchData[key].sunSign;
-		// 			var matchGender = matchData[key].gender;
-		// 			var matchSeeking = matchData[key].relationship;
-		// 			var matchAbout = matchData[key].aboutYou;
-		//    }
-		// 		console.log("Match info: " + matchName + " " + matchSign + " " + matchGender + " " + matchSeeking + " " + matchAbout);
-
-//REFERNCE: LOOP Example: 
-// var query = firebase.database().ref("users").orderByKey();
-		// query.once("value")
-		// 	.then(function (snapshot) {
-		// 		snapshot.forEach(function (childSnapshot) {
-		// 			// key will be "ada" the first time and "alan" the second time
-		// 			var key = childSnapshot.key;
-		// 			// childData will be the actual contents of the child
-		// 			var childData = childSnapshot.val();
-		// 		});
-		// 	});
-
-// REFERENCE: Show Object on Child-Added
-		// 	var playersRef = firebase.database().ref("players/");
-		// playersRef.orderByChild("name").on("child_added", function(data) {
-		//    console.log(data.val().name);
-		// });
