@@ -28,6 +28,10 @@ a{
 	
 #showProfile{
 background-color: #00A3CC;
+border-radius: 25px;
+color: white;
+font-family: 'Courier New', Courier, monospace;
+font-size: 40px;
 }
 
 .text-center {
@@ -45,19 +49,39 @@ background-color: #00A3CC;
 	border-radius: 25px;
 }
 
-.btn {
-
+#signDescription {
+	width: 1000px;
+	height: 200px;
+	border-radius: 25px;
 }
 
 .sun-sign {
 	font-size: 80px;
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
+}
+
+h3 {
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
+}
+th {
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
+}
+
+button {
+	width: 150px;
+	height: 100px;
+	border-radius: 12px;
+	background-color: #008CBA;
 }
 	
 #chat{
 	border: 3px solid #BDBDBD;
 	height: 400px;
 	overflow: scroll;
-	overflow-x:auto;
+	overflow-x: auto;
 }
 	
 #typeMessage {
