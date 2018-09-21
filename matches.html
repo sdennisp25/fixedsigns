@@ -56,15 +56,19 @@
 					</button>
 				</div>
 				<div class="modal-body">
+				<form id="accountForm">
 					<div class="form-group">
-						<input type="text" name="username" class="form-control" id="username" placeholder="Your Username">
+						<input type="text" name="username" class="form-control" id="username" required data-parsley-length="[5,15]" data-parsley-trigger="keyup"
+						 placeholder="Your Username">
 					</div>
 					<div class="form-group">
-						<input type="email" name="email" class="form-control" id="email" placeholder="Enter Email">
+						<input type="email" name="email" class="form-control" id="email" required data-parsley-type="email" data-parsley-trigger="keyup"
+						 placeholder="Enter Email">
 					</div>
 					<div class="form-group">
-						<input type="password" name="password" class="form-control" id="password" placeholder="Password">
+						<input type="password" name="password" class="form-control" id="password" required data-parsley-length="[5,15]" data-parsley-trigger="keyup" placeholder="Password">
 					</div>
+				</form>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -155,6 +159,8 @@
 	<script src="./js/logic.js"></script>
 	<script src="./js/soundapi.js"></script>
 	<script src="./js/info.js"></script>
+	<script src="./js/parsley.min.js"></script>
+
 
 </body>
 

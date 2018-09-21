@@ -58,10 +58,11 @@ window.onload = function () {
 	freesound.setToken(key);
 };
 
-// ////Parsley.js////
-// $(document).ready(function () {
-// 	$("#accountForm").parsley();
-// });
+////Parsley.js////
+$(document).ready(function () {
+	console.log("Parsley!");
+	$("#accountForm").parsley();
+});
 
 ///////////////LISTENING FOR USER STATUS CHANGE///////////////////
 //Firebase to listen for user status changes//
