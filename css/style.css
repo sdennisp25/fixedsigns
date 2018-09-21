@@ -14,10 +14,10 @@ nav {
 	
 .navbar-brand {
 	color: #00A3CC;
-	font-size: 24px;
+	font-size: 40px;
 }
 	
-a{
+a {
 	color: #00A3CC;
 	font-size: 18px;
 }
@@ -50,8 +50,9 @@ a{
 }
 
 .container-fluid {
-	padding-top: 70px;
-	padding-bottom: 70px;
+	position: relative;
+	box-sizing: border-box;
+	width: 100%;
 }
 	
 #showProfile{
@@ -79,25 +80,47 @@ font-size: 40px;
 
 #signDescription {
 	box-sizing: border-box;
-	width: 100%;
-	height: 200px;
 	border-radius: 25px;
 	padding: 15px;
+	font-size: 20px;
 	}
 
 .sun-sign {
-	font-size: 80px;
+	font-size: 70px;
 	font-family: 'Courier New', Courier, monospace;
 	font-weight: bold;
+}
+
+.navbar {
+	width: 100%;
+	height: 10%;
+}
+
+ul {
+	float: left;
+}
+
+h1 {
+	box-sizing: border-box;
 }
 
 h3 {
 	font-family: 'Courier New', Courier, monospace;
 	font-weight: bold;
 }
+
+h4 {
+	color: white;
+	font-size: 15px;
+}
 th {
 	font-family: 'Courier New', Courier, monospace;
 	font-weight: bold;
+}
+
+footer {
+	padding: 5px;
+	text-align: center;
 }
 
 #matchBtn {
@@ -105,7 +128,75 @@ th {
 	height: 100px;
 	border-radius: 50%;
 	background-color: #008CBA;
-	
 }
 
 
+/* ////////////////////////// 980 WIDTH /////////////////////////// */
+@media screen and (max-width: 980px) {
+	.heart {
+		width: 70%;
+		height: 70%;
+	}
+
+	h3 {
+		width: 100%;
+		height: 35%;
+		padding: 20px;
+	}
+
+	footer {
+		margin-top: 5%;
+	}
+
+}
+
+
+/* ////////////////////////// 768 WIDTH /////////////////////////// */
+
+@media screen and (max-width: 768px) {
+	.heart {
+		width: 70%;
+		height: 70%;
+	}
+
+	h3 {
+		width: 100%;
+		height: 35%;
+		padding: 20px;
+	}
+
+	footer {
+		margin-top: 5%;
+	}
+
+}
+
+
+/* ////////////////////////// 640 WIDTH /////////////////////////// */
+@media screen and (max-width: 574px) {
+
+	.heart {
+		width: 90%;
+		height: 90%;
+		margin-bottom: 0;
+	}
+
+	h3 {
+		width: 100%;
+		height: 35%;
+		padding: 20px;
+	}
+
+	footer {
+		margin-top: 5%;
+	}
+
+	.navbar {
+		display: inline-block;
+	}
+
+	h1 {
+		font-size: 10px;
+	}
+
+}
