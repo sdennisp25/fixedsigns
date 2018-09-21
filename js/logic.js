@@ -242,21 +242,11 @@ function renderButtons() {
 		matchButtons.attr("data-matchvalue", matchArray[i]);
 		matchButtons.attr("src", "images/" + matchArray[i] + ".png");
 		var buttonLabel = $("<h3>")
-		buttonLabel.html(matchArray[i]);
-		$("#displayButtons").append(matchButtons, buttonLabel);
+		buttonLabel.html("   " + matchArray[i]);
+		$("#displayButtons").append(matchButtons);
+		$("#displayLabel").append(buttonLabel);
 	}
 }
-// function renderButtons() {
-// 	for (var i = 0; i < matchArray.length; i++) {
-// 		var matchButtons = $("<img>");
-// 		matchButtons.attr("id", "matchBtn");
-// 		matchButtons.attr("data-matchvalue", matchArray[i]);
-// 		matchButtons.attr("src", "images/" + matchArray[i] + ".png");
-// 		var buttonLabel = $("<h3>")
-// 		buttonLabel.html(matchArray[i]);
-// 		$("#displayButtons").append(matchButtons, buttonLabel);
-// 	}
-// }
 
 //RETRIEVE PROFILES FOR THE SUNSIGN SELECTED/
 function getMatches(sign) {
