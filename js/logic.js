@@ -52,50 +52,18 @@ var rejectorID;
 var signSound;
 
 
+//pulls from the soundapi.js api to pull sound
+var key = "4xpUB6VVkPsCPCmEeeyydBPJ47x4PWetDO6VrWnM";
+window.onload = function () {
+	freesound.setToken(key);
+};
+
 // ////Parsley.js////
 // $(document).ready(function () {
 // 	$("#accountForm").parsley();
 // });
 
-//FIREBASE AUTHS - CREATE ACCOUNT, LOGIN, LOGOUT, USER STATUS CHANGE//
-//Create a Firebase User using Navbar-Register
-$submitSignUp.on("click", function (user) {
-	var displayName = $("#username").val().trim();
-	var email = $("#email").val().trim();
-	var password = $("#password").val().trim();
-	console.log("USER: " + displayName);
-	console.log("email: " + email);
-	firebase.auth().createUserWithEmailAndPassword(email, password).then(function (user) {
-		user.updateProfile({ displayName: displayName });
-	}).catch(function (error) {
-		console.log(error);
-	});
-});
-
-//Sign into Firebase using Navbar-Login
-$submitLogIn.on("click", function () {
-	var email = $("#loginEmail").val().trim();
-	var password = $("#LoginPsw").val().trim();
-	console.log("Login Successful!");
-	firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-		var errorCode = error.code;
-		var errorMessage = error.message;
-		console.log("Error: " + errorCode + " Message: " + errorMessage);
-	});
-});
-
-//Sign out of Firebase using Navbar-Sign Out
-$signOut.on("click", function () {
-	event.preventDefault();
-	firebase.auth().signOut().then(function () {
-		console.log("Sign Out Successful");
-		location.reload();
-		matchArray = [];
-	}).catch(function (error) {
-		console.log("Error Signing Out");
-	});
-});
-
+///////////////LISTENING FOR USER STATUS CHANGE///////////////////
 //Firebase to listen for user status changes//
 firebase.auth().onAuthStateChanged(function (user) {
 	if (user) {
@@ -111,12 +79,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 	}
 });
 
-///SUBMIT PROFILE AND SET IN FIREBASE//
-$("#profileSubmit").on("click", function () {
-	event.preventDefault();
-	setProfile();
-	window.location.href = "./index.html";
-})
+//////////////////////////////CREATE FUNCTIONS/////////////////////////////
 
 //TAKE THE VALUES FROM THE PROFILE FORM AND SEND TO FIREBASE PROFILE FOLDER
 function setProfile() {
@@ -166,13 +129,12 @@ function getProfile(snapshot) {
 	userEmail = profile.userEmail;
 	//Display profile information in the DOM as needed
 	$(".sun-sign").html($sunSign);
-	$("#sunSignPic").attr("src", "./images/" + $sunSign+ ".png");
+	$("#sunSignPic").attr("src", "./images/" + $sunSign + ".png");
 	$("#showProfile").html("Name: " + $firstName + "<br>" + "Gender: " + $gender + "<br>" + "About Me: " + $aboutYou);
 	$("#signDescription").html(description[$sunSign]);
 	bestMatches($sunSign);
 	console.log("Matches: " + match1 + " " + match2 + " " + match3);
 }
-
 
 //DETERMINE MOST COMPATIBLE SIGNS
 function bestMatches() {
@@ -232,37 +194,8 @@ function bestMatches() {
 	renderButtons();
 }
 
-//CREATE BUTTONS IN DOM WHICH CARRY MATCH1-3 VALUES AS THEIR DATA-PROPERTY
-function renderButtons() {
-	for (var i = 0; i < matchArray.length; i++) {
-		var matchButtons = $("<img>");
-		matchButtons.attr("id", "matchBtn");
-		matchButtons.attr("data-matchvalue", matchArray[i]);
-		matchButtons.attr("src", "images/" + matchArray[i] + ".png");
-		var matchName = $("<h3>")
-		matchName.html(matchArray[i]);
-		$("#displayButtons").append(matchButtons, matchName);
-	}
-}
-
-//----------------------------------------------------
-//pulls from the soundapi.js api to pull sound
-var key = "4xpUB6VVkPsCPCmEeeyydBPJ47x4PWetDO6VrWnM";
-window.onload = function () {
-	freesound.setToken(key);
-};
-
-//----------------------------------------------------
-
-//CLICKING ON A MATCH BUTTON DISPLAYS USER PROFILES THAT HAVE THAT SIGN
-$(document).on("click", "#matchBtn", function () {
-	event.preventDefault();
-	var sign = $(this).attr("data-matchvalue");
-	signSound = $(this).attr("data-matchvalue");
-	console.log(sign);
-	getMatches(sign)
-
-	//THESE WILL RE-ASSIGN THE SOUND VALUE TO HAVE IT PASSED THROUGH THE API TO PULL THE SOUND
+//THESE WILL RE-ASSIGN THE SOUND VALUE TO HAVE IT PASSED THROUGH THE API TO PULL THE SOUND
+function zodiacSounds(sign) {
 	if (sign === "Aquarius") {
 		signSound = "water";
 	}
@@ -299,7 +232,20 @@ $(document).on("click", "#matchBtn", function () {
 	else if (sign === "Capricorn") {
 		signSound = "goat";
 	}
-})
+}
+
+//CREATE BUTTONS IN DOM WHICH CARRY MATCH1-3 VALUES AS THEIR DATA-PROPERTY
+function renderButtons() {
+	for (var i = 0; i < matchArray.length; i++) {
+		var matchButtons = $("<img>");
+		matchButtons.attr("id", "matchBtn");
+		matchButtons.attr("data-matchvalue", matchArray[i]);
+		matchButtons.attr("src", "images/" + matchArray[i] + ".png");
+		var buttonLabel = $("<h3>")
+		buttonLabel.html(matchArray[i]);
+		$("#displayButtons").append(matchButtons, buttonLabel);
+	}
+}
 
 //RETRIEVE PROFILES FOR THE SUNSIGN SELECTED/
 function getMatches(sign) {
@@ -317,12 +263,7 @@ function getMatches(sign) {
 			matchDisplayName = matchData.displayName;
 			//Sort Profiles for Gender Preferences//
 			sortByGender();
-			//----------------------------------------------------
-
-			//----------------------------------------------------
-			//Needs a value to be passed through to pull a specific sound effect, else it would play whatevers on the window
-			//also need to make sure that only one button will be played at a time
-			// var sound = $(this).attr("data-matchvalue");
+			//-----------SOUND API START-----------------------------------------
 			console.log("SOUND: ", signSound);
 			var queryURL = "https://freesound.org/apiv2/search/text/?query=" + signSound + "&token=" + key;
 
@@ -344,7 +285,7 @@ function getMatches(sign) {
 			})
 		});
 	});
-	//----------------------------------------------------
+	//---------------SOUND API END-------------------------------------
 
 	//SORT PROFILE MATCHES BASED ON TYPE OF RELATIONSHIP BEING SAUGHT
 	function sortByGender() {
@@ -364,53 +305,8 @@ function getMatches(sign) {
 	}
 }
 
-//APPEND THE SORTED MATCHES TO THE MATCH TABLE IN THE DOM
-function matchTable() {
-	//CREATE A LINK THAT WILL ALLOW USERS TO EMAIL A MATCH//
-	var contactLink = $("<a>");
-	contactLink.text("Send Email");
-	contactLink.attr("href", "Mailto:" + matchEmail);
-	//CREATE A BUTTON THAT ALLOWS THE USER TO REMOVE A MATCH//
-	var excludeBtn = $("<button>");
-	excludeBtn.attr("data-matchid", matchID);
-	excludeBtn.attr("id", "excludeBtn");
-	var newRow = $("<tr>")
-	newRow.attr("data-rowid", matchID).append(
-		$("<td>").text(matchSign),
-		$("<td>").text(matchName),
-		$("<td>").text(matchAbout),
-		$("<td>").append(contactLink),
-		$("<td>").append(excludeBtn),
-	)
-	//Add the new row to the table body
-	$("tbody").append(newRow);
-	//DO NOT DISPLAY ANY MATCHES WHERE THE USER REMOVED A MATCH OR HAS BEEN REMOVED//
-	checkIfMatchAllowed();
-	checkForDenied();
-}
-
-//IF USERS CLICKS "REMOVE" BUTTON, PROFILE REMOVED FROM DOM & SENT TO EXCLUDED FILE IN FIREBASE
-$(document).on("click", "#excludeBtn", function () {
-	this.closest("tr").remove();
-	var denier = $firstName;
-	var denierID = userID;
-	var denied = matchName;
-	var deniedID = $(this).attr("data-matchid");
-	console.log(denier + " denies: " + denied + ": " + deniedID);
-	var deniedPair = {
-		denier: denier,
-		denierID: denierID,
-		denied: denied,
-		deniedID: deniedID,
-	}
-	database.ref("/excluded").push().set(deniedPair);
-});
-database.ref("/excluded").on("child_added", function (snapshot) {
-});
-
-
 //CONFIRM NO MATCHES DISPLAY THAT ARE ALREADY IN THE EXCLUDED PAIRS FOLDER IN FIREBASE//
-function checkIfMatchAllowed() {
+function checkIfDenied(userID) {
 	//CHECK FIRST TO SEE IF USER DENIED ANY MATCHES//
 	database.ref("/excluded").orderByChild("denierID").equalTo(userID).once("value").then(function (snapshot) {
 		snapshot.forEach(function (sv) {
@@ -420,12 +316,21 @@ function checkIfMatchAllowed() {
 			denierID = sv.denierID;
 			denied = sv.denied;
 			deniedID = sv.deniedID;
-		});
+			console.log("denierID: " + denierID + "userID: " + userID);
+				});
+				//HIDE ROWS ON THE MATCH TABLE//
+		if ((userID === denierID) || (matchName=== denied)) {
+			console.log("no match allowed: " + denier + " denied: " + denied);
+			$("tr[data-rowid=" + denied + "]").hide();
+		} else if ((userID === deniedID)||(matchName===denier)){
+			console.log("no match allowed: " + denier + " denied: " + denied);
+			$("tr[data-rowid=" + denier + "]").hide();
+		}
 	});
 }
 
-//THEN CHECK IF THE USER HAS BEEN DENIED BY ANOTHER USER//
-function checkForDenied() {
+// THEN CHECK IF THE USER HAS BEEN DENIED BY ANOTHER USER//
+function checkIfWasDenied(userID) {
 	database.ref("/excluded").orderByChild("deniedID").equalTo(userID).once("value").then(function (snapshot) {
 		snapshot.forEach(function (sv) {
 			var sv = sv.val();;
@@ -435,10 +340,118 @@ function checkForDenied() {
 			rejectee = sv.denied;
 			rejecteeID = sv.deniedID;
 		});
+		//HIDE ROWS ON THE MATCH TABLE//
+		if ((userID === rejecteeID)||(matchName === rejector)){
+			console.log("no match allowed: " + rejector + " denied: " + rejectee);
+			$("tr[data-rowid=" + rejector + "]").hide();
+		}
 	});
-	//HIDE ROWS ON THE MATCH TABLE//
-		if ((userID === rejecteeID) || (matchName === denied)) {
-		console.log("no match allowed");
-		$("tr[data-rowid=" + matchID + "]").hide();
-	}
 }
+
+//APPEND THE SORTED MATCHES TO THE MATCH TABLE IN THE DOM
+function matchTable() {
+	//CREATE A LINK THAT WILL ALLOW USERS TO EMAIL A MATCH//
+	var contactLink = $("<a>");
+	contactLink.text("Send Email");
+	contactLink.attr("href", "Mailto:" + matchEmail);
+	//CREATE A BUTTON THAT ALLOWS THE USER TO REMOVE A MATCH//
+	var excludeBtn = $("<button>");
+	excludeBtn.attr("data-matchname", matchName);
+	excludeBtn.attr("data-matchid", matchID);
+	excludeBtn.attr("id", "excludeBtn");
+	var newRow = $("<tr>")
+	newRow.attr("data-rowid", matchName).append(
+		$("<td>").text(matchSign),
+		$("<td>").text(matchName),
+		$("<td>").text(matchAbout),
+		$("<td>").append(contactLink),
+		$("<td>").append(excludeBtn),
+	)
+	//Add the new row to the table body
+	$("tbody").append(newRow);
+	//DO NOT DISPLAY ANY MATCHES WHERE THE USER REMOVED A MATCH OR HAS BEEN REMOVED//
+	console.log("Current Match Name: " + matchName);
+	checkIfDenied(userID);
+	checkIfWasDenied(userID);
+}
+
+//////////////////////////CALL FUNCTIONS//////////////////////////////
+$("#matchPage").on("click", function () {
+	window.location.href = "./matches.html";
+})
+
+//Create a Firebase User using Navbar-Register
+$submitSignUp.on("click", function (user) {
+	var displayName = $("#username").val().trim();
+	var email = $("#email").val().trim();
+	var password = $("#password").val().trim();
+	console.log("USER: " + displayName);
+	console.log("email: " + email);
+	firebase.auth().createUserWithEmailAndPassword(email, password).then(function (user) {
+		user.updateProfile({ displayName: displayName });
+	}).catch(function (error) {
+		console.log(error);
+	});
+});
+
+//Sign into Firebase using Navbar-Login
+$submitLogIn.on("click", function () {
+	var email = $("#loginEmail").val().trim();
+	var password = $("#LoginPsw").val().trim();
+	console.log("Login Successful!");
+	firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+		var errorCode = error.code;
+		var errorMessage = error.message;
+		console.log("Error: " + errorCode + " Message: " + errorMessage);
+	});
+});
+
+///SUBMIT PROFILE AND SET IN FIREBASE//
+$("#profileSubmit").on("click", function () {
+	window.location.href = "./matches.html";
+	event.preventDefault();
+	setProfile();
+})
+
+//Sign out of Firebase using Navbar-Sign Out
+$signOut.on("click", function () {
+	event.preventDefault();
+	firebase.auth().signOut().then(function () {
+		console.log("Sign Out Successful");
+		matchArray = [];
+	}).catch(function (error) {
+		console.log("Error Signing Out");
+	});
+	window.location.href = "./index.html";
+});
+
+//IF USERS CLICKS "REMOVE" BUTTON, PROFILE REMOVED FROM DOM & SENT TO EXCLUDED FILE IN FIREBASE
+$(document).on("click", "#excludeBtn", function () {
+	this.closest("tr").remove();
+	denier = $firstName;
+	denierID = userID;
+	denied = $(this).attr("data-matchname");
+	deniedID = $(this).attr("data-matchid");
+	console.log(denier + " denies: " + denied);
+	var deniedPair = {
+		denier: denier,
+		denierID: denierID,
+		denied: denied,
+		deniedID: deniedID,
+	}
+	database.ref("/excluded").push().set(deniedPair);
+});
+database.ref("/excluded").on("child_added", function (snapshot) {
+
+});
+
+//CLICKING ON A MATCH BUTTON DISPLAYS USER PROFILES THAT HAVE THAT SIGN
+$(document).on("click", "#matchBtn", function () {
+	event.preventDefault();
+	var sign = $(this).attr("data-matchvalue");
+	signSound = $(this).attr("data-matchvalue");
+	console.log(sign);
+	getMatches(sign);
+	zodiacSounds(sign);
+})
+
