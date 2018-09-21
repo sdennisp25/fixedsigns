@@ -58,16 +58,9 @@ window.onload = function () {
 	freesound.setToken(key);
 };
 
-<<<<<<< HEAD
-////Parsley.js////
-$(document).ready(function () {
-	console.log("Parsley!");
-	$("#accountForm").parsley();
-=======
 // ////Parsley.js////
  $(document).ready(function () {
  	$("#accountForm").parsley();
->>>>>>> master
 });
 
 ///////////////LISTENING FOR USER STATUS CHANGE///////////////////
