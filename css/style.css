@@ -1,25 +1,47 @@
-.profile-body {
-	background-color: rgb(194, 230, 244);
-}
-
-#content {
-	width: 960px;
-	margin: 0 auto;
-	background-color: rgb(194, 230, 244);
+a {
+	color: #00A3CC;
+	font-size: 18px;
 }
 
 nav {
 	height: 80px;
 }
+
+ul {
+	float: left;
+}
+
+h1 {
+	box-sizing: border-box;
+}
+
+h3 {
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
+	display: inline;
+}
+
+h4 {
+	color: white;
+	font-size: 15px;
+}
+th {
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
+}
+
+footer {
+	padding: 5px;
+	text-align: center;
+}
+
+.profile-body {
+	background-color: rgb(194, 230, 244);
+}
 	
 .navbar-brand {
 	color: #00A3CC;
 	font-size: 40px;
-}
-	
-a {
-	color: #00A3CC;
-	font-size: 18px;
 }
 
 .heart {
@@ -34,16 +56,6 @@ a {
 	margin-top: 50px;
 }
 
-#container-heart {
-	position: absolute;
-	position:  sticky;
-	left: 0;
-	top: 30%;
-	width: 100%;
-	text-align: center;
-	font-size: 30px;
-}
-
 .choices {
 	font-family: 'Courier New', Courier, monospace;
 	font-weight: bold;
@@ -53,14 +65,6 @@ a {
 	position: relative;
 	box-sizing: border-box;
 	width: 100%;
-}
-	
-#showProfile{
-background-color: #00A3CC;
-border-radius: 25px;
-color: white;
-font-family: 'Courier New', Courier, monospace;
-font-size: 40px;
 }
 
 .text-center {
@@ -78,13 +82,6 @@ font-size: 40px;
 	border-radius: 25px;
 }
 
-#signDescription {
-	box-sizing: border-box;
-	border-radius: 25px;
-	padding: 15px;
-	font-size: 20px;
-	}
-
 .sun-sign {
 	font-size: 70px;
 	font-family: 'Courier New', Courier, monospace;
@@ -95,40 +92,49 @@ font-size: 40px;
 	width: 100%;
 	height: 10%;
 }
-
-ul {
-	float: left;
+.table {
+	margin-bottom: 10%;
+}
+	
+#showProfile{
+background-color: #00A3CC;
+border-radius: 25px;
+color: white;
+font-family: 'Courier New', Courier, monospace;
+font-size: 40px;
 }
 
-h1 {
+#content {
+	width: 960px;
+	margin: 0 auto;
+	background-color: rgb(194, 230, 244);
+}
+
+#signDescription {
 	box-sizing: border-box;
-}
-
-h3 {
-	font-family: 'Courier New', Courier, monospace;
-	font-weight: bold;
-}
-
-h4 {
-	color: white;
-	font-size: 15px;
-}
-th {
-	font-family: 'Courier New', Courier, monospace;
-	font-weight: bold;
-}
-
-footer {
-	padding: 5px;
-	text-align: center;
-}
+	border-radius: 25px;
+	padding: 15px;
+	font-size: 20px;
+	}
 
 #matchBtn {
+	margin-right: 2%;
 	width: 100px;
 	height: 100px;
 	border-radius: 50%;
 	background-color: #008CBA;
 }
+
+#container-heart {
+	position: absolute;
+	position:  sticky;
+	left: 0;
+	top: 30%;
+	width: 100%;
+	text-align: center;
+	font-size: 30px;
+}
+
 
 
 /* ////////////////////////// 980 WIDTH /////////////////////////// */
