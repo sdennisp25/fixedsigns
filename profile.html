@@ -62,13 +62,13 @@
 				<br>
 				<div class="form-group">
 					<label for="fname">First Name</label>
-					<input type="text" class="form-control" name="firstname" id="fname" data-parsley-length="[4, 20]" data-parsley-group="block1"
+					<input type="text" class="form-control" name="firstname" id="fname" required data-parsley-length="[2,20]" data-parsley-trigger="keyup"
 					 placeholder="Your name..">
 				</div>
 
 				<div class="form-group">
 					<label for="lname">Last Name</label>
-					<input type="text" class="form-control" name="lastname" id="lname" data-parsley-length="[4, 20]" data-parsley-group="block1"
+					<input type="text" class="form-control" name="lastname" id="lname" required data-parsley-length="[2,20]" data-parsley-trigger="keyup"
 					 placeholder="Your last name..">
 				</div>
 
@@ -114,10 +114,11 @@
 				<br>
 				<div class="form-group">
 					<label for="aboutYou">More About You...</label>
-					<textarea class="form-control" id="aboutYou" rows="3"></textarea>
+					<textarea class="form-control" id="aboutYou" rows="3" required data-parsley-length="[5,15]" data-parsley-trigger="keyup"></textarea>
 				</div>
+				<br>
 				<div class="invalid-form-error-message"></div>
-				<button type="submit" class="btn btn-info validate" id="profileSubmit">Submit</button>
+				<button type="submit" data-dismiss="modal" class="btn btn-info validate" id="profileSubmit">Submit</button>
 			</div>
 		</form>
 	</main>
