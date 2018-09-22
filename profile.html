@@ -56,17 +56,18 @@
 	<!-- Content Section -->
 	<main id="content">
 		<br><br>
-		<form action="action_page.php">
+		<form action="action_page.php" id="form" class="val-form" data-parsley-validate="">
+		<div>
 			<h3>Create Your Profile:</h3>
 			<br>
 			<div class="form-group">
 				<label for="fname">First Name</label>
-				<input type="text" class="form-control" name="firstname" id="fname" placeholder="Your name..">
+				<input type="text" class="form-control" name="firstname" id="fname" data-parsley-length="[4, 20]" data-parsley-group="block1" placeholder="Your name..">
 			</div>
 
 			<div class="form-group">
 				<label for="lname">Last Name</label>
-				<input type="text" class="form-control" name="lastname" id="lname" placeholder="Your last name..">
+				<input type="text" class="form-control" name="lastname" id="lname" data-parsley-length="[4, 20]" data-parsley-group="block1" placeholder="Your last name..">
 			</div>
 
 			<div class="form-group">
@@ -113,8 +114,9 @@
 				<label for="aboutYou">More About You...</label>
 				<textarea class="form-control" id="aboutYou" rows="3"></textarea>
 			</div>
-
-			<button type="submit" class="btn btn-info" id="profileSubmit">Submit</button>
+			<div class="invalid-form-error-message"></div>
+			<button type="submit" class="btn btn-info validate" id="profileSubmit">Submit</button>
+		</div>
 		</form>
 	</main>
 
@@ -152,12 +154,13 @@
 	<!-- LOGIN MODAL- END -->
 	<!-- Links to Scripts -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="parsley.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 	<script src="./js/logic.js"></script>
 	<script src="./js/soundapi.js"></script>
 	<script src="./js/info.js"></script>
-
+	<script src="./js/parsley.min.js"></script>
 
 </body>
 

@@ -82,6 +82,16 @@ footer {
 	border-radius: 25px;
 }
 
+#signDescription {
+	box-sizing: border-box;
+	font-family: 'Courier New', Courier, monospace;
+	width: 100%;
+	height: 200px;
+	border-radius: 25px;
+	padding: 15px;
+	font-size: 20px;
+	}
+
 .sun-sign {
 	font-size: 70px;
 	font-family: 'Courier New', Courier, monospace;
@@ -92,6 +102,15 @@ footer {
 	width: 100%;
 	height: 10%;
 }
+
+p {
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
+}
+
+th {
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
 .table {
 	margin-bottom: 10%;
 }
@@ -122,7 +141,26 @@ font-size: 40px;
 	width: 100px;
 	height: 100px;
 	border-radius: 50%;
+}
+#excludeBtn {
+	width: 50%;
+	height: 100%;
+	margin: 4px 2px;
+	padding: 16px 32px;
+	border-radius: 50%;
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+#excludeBtn:hover {
 	background-color: #008CBA;
+	color: antiquewhite;
+}
+
+.btn {
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
 }
 
 #container-heart {
@@ -204,5 +242,16 @@ font-size: 40px;
 	h1 {
 		font-size: 10px;
 	}
+
+	#signDescription {
+		box-sizing: border-box;
+		font-family: 'Courier New', Courier, monospace;
+		width: 100%;
+		height: 200px;
+		border-radius: 25px;
+		padding: 15px;
+		font-size: 20px;
+		overflow: auto;
+		}
 
 }
