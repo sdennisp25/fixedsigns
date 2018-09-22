@@ -60,7 +60,7 @@ window.onload = function () {
 
 // ////Parsley.js////
 $(document).ready(function () {
-	$("#accountForm").parsley();
+	$("#accountForm", "#form").parsley();
 });
 
 ///////////////LISTENING FOR USER STATUS CHANGE///////////////////
