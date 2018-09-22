@@ -15,16 +15,22 @@ h1 {
 	box-sizing: border-box;
 }
 
+h2 {
+	font-family: 'Courier New', Courier, monospace;
+	display: inline;
+}
+
 h3 {
 	font-family: 'Courier New', Courier, monospace;
 	font-weight: bold;
-	display: inline;
+	/* display: inline; */
 }
 
 h4 {
 	color: white;
 	font-size: 15px;
 }
+
 th {
 	font-family: 'Courier New', Courier, monospace;
 	font-weight: bold;
@@ -33,6 +39,11 @@ th {
 footer {
 	padding: 5px;
 	text-align: center;
+}
+
+p {
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
 }
 
 .profile-body {
@@ -82,15 +93,6 @@ footer {
 	border-radius: 25px;
 }
 
-#signDescription {
-	box-sizing: border-box;
-	font-family: 'Courier New', Courier, monospace;
-	width: 100%;
-	height: 200px;
-	border-radius: 25px;
-	padding: 15px;
-	font-size: 20px;
-	}
 
 .sun-sign {
 	font-size: 70px;
@@ -103,24 +105,21 @@ footer {
 	height: 10%;
 }
 
-p {
+.table {
+	margin-bottom: 10%;
+}
+
+.btn {
 	font-family: 'Courier New', Courier, monospace;
 	font-weight: bold;
 }
 
-th {
-	font-family: 'Courier New', Courier, monospace;
-	font-weight: bold;
-.table {
-	margin-bottom: 10%;
-}
-	
 #showProfile{
-background-color: #00A3CC;
-border-radius: 25px;
-color: white;
-font-family: 'Courier New', Courier, monospace;
-font-size: 40px;
+	background-color: #00A3CC;
+	border-radius: 25px;
+	color: white;
+	font-family: 'Courier New', Courier, monospace;
+	font-size: 40px;
 }
 
 #content {
@@ -131,6 +130,9 @@ font-size: 40px;
 
 #signDescription {
 	box-sizing: border-box;
+	font-family: 'Courier New', Courier, monospace;
+	width: 100%;
+	height: 200px;
 	border-radius: 25px;
 	padding: 15px;
 	font-size: 20px;
@@ -158,11 +160,6 @@ font-size: 40px;
 	color: antiquewhite;
 }
 
-.btn {
-	font-family: 'Courier New', Courier, monospace;
-	font-weight: bold;
-}
-
 #container-heart {
 	position: absolute;
 	position:  sticky;
@@ -172,8 +169,6 @@ font-size: 40px;
 	text-align: center;
 	font-size: 30px;
 }
-
-
 
 /* ////////////////////////// 980 WIDTH /////////////////////////// */
 @media screen and (max-width: 980px) {
@@ -193,8 +188,6 @@ font-size: 40px;
 	}
 
 }
-
-
 /* ////////////////////////// 768 WIDTH /////////////////////////// */
 
 @media screen and (max-width: 768px) {

@@ -59,8 +59,8 @@ window.onload = function () {
 };
 
 // ////Parsley.js////
- $(document).ready(function () {
- 	$("#accountForm").parsley();
+$(document).ready(function () {
+	$("#accountForm").parsley();
 });
 
 ///////////////LISTENING FOR USER STATUS CHANGE///////////////////
@@ -241,9 +241,10 @@ function renderButtons() {
 		matchButtons.attr("id", "matchBtn");
 		matchButtons.attr("data-matchvalue", matchArray[i]);
 		matchButtons.attr("src", "images/" + matchArray[i] + ".png");
-		var buttonLabel = $("<h3>")
-		buttonLabel.html(matchArray[i]);
-		$("#displayButtons").append(matchButtons, buttonLabel);
+		var buttonLabel = $("<h2>")
+		buttonLabel.html("    "+ matchArray[i]);
+		$("#displayButtons").append(matchButtons);
+		$("#displayLabel").append(buttonLabel);
 	}
 }
 
@@ -317,12 +318,12 @@ function checkIfDenied(userID) {
 			denied = sv.denied;
 			deniedID = sv.deniedID;
 			console.log("denierID: " + denierID + "userID: " + userID);
-				});
-				//HIDE ROWS ON THE MATCH TABLE//
-		if ((userID === denierID) || (matchName=== denied)) {
+		});
+		//HIDE ROWS ON THE MATCH TABLE//
+		if ((userID === denierID) || (matchName === denied)) {
 			console.log("no match allowed: " + denier + " denied: " + denied);
 			$("tr[data-rowid=" + denied + "]").hide();
-		} else if ((userID === deniedID)||(matchName===denier)){
+		} else if ((userID === deniedID) || (matchName === denier)) {
 			console.log("no match allowed: " + denier + " denied: " + denied);
 			$("tr[data-rowid=" + denier + "]").hide();
 		}
@@ -341,7 +342,7 @@ function checkIfWasDenied(userID) {
 			rejecteeID = sv.deniedID;
 		});
 		//HIDE ROWS ON THE MATCH TABLE//
-		if ((userID === rejecteeID)||(matchName === rejector)){
+		if ((userID === rejecteeID) || (matchName === rejector)) {
 			console.log("no match allowed: " + rejector + " denied: " + rejectee);
 			$("tr[data-rowid=" + rejector + "]").hide();
 		}
@@ -454,16 +455,3 @@ $(document).on("click", "#matchBtn", function () {
 	getMatches(sign);
 	zodiacSounds(sign);
 })
-
-/*$('#form').parsley();
-$(function () {
-	$('.val-form"').parsley().on('form:validate', function (formInstance) {
-	  var ok = formInstance.isValid({group: 'block1', force: true}) || formInstance.isValid({group: 'block2', force: true});
-	  $('.invalid-form-error-message')
-		.html(ok ? '' : 'You must correctly fill *at least one of these two blocks!')
-		.toggleClass('filled', !ok);
-	  if (!ok)
-		formInstance.validationResult = false;
-	});
-  });*/
-
