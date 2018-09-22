@@ -242,12 +242,11 @@ function renderButtons() {
 		matchButtons.attr("data-matchvalue", matchArray[i]);
 		matchButtons.attr("src", "images/" + matchArray[i] + ".png");
 		var buttonLabel = $("<h2>")
-		buttonLabel.html("    "+ matchArray[i]);
+		buttonLabel.html("    " + matchArray[i]);
 		$("#displayButtons").append(matchButtons);
 		$("#displayLabel").append(buttonLabel);
 	}
 }
-
 //RETRIEVE PROFILES FOR THE SUNSIGN SELECTED/
 function getMatches(sign) {
 	console.log(sign);
@@ -400,6 +399,7 @@ $submitLogIn.on("click", function () {
 	var email = $("#loginEmail").val().trim();
 	var password = $("#LoginPsw").val().trim();
 	console.log("Login Successful!");
+	$("#profile").hide();
 	firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
 		var errorCode = error.code;
 		var errorMessage = error.message;
