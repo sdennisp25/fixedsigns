@@ -30,7 +30,8 @@ h4 {
 	color: white;
 	font-size: 15px;
 }
-th {
+
+th, p {
 	font-family: 'Courier New', Courier, monospace;
 	font-weight: bold;
 }
@@ -155,8 +156,8 @@ footer {
 	padding: 16px 32px;
 	border-radius: 50%;
 	-webkit-transition-duration: 0.4s; /* Safari */
- transition-duration: 0.4s;
- cursor: pointer;
+ 	transition-duration: 0.4s;
+ 	cursor: pointer;
 }
 #excludeBtn:hover {
 	background-color: #008CBA;
