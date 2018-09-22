@@ -57,15 +57,18 @@
 				</div>
 				<div class="modal-body">
 					<form id="accountForm">
-					<div class="form-group">
-						<input type="text" name="username" class="form-control" id="username" required data-parsley-length="[5,15]" data-parsley-trigger="keyup" placeholder="Your Username">
-					</div>
-					<div class="form-group">
-						<input type="email" name="email" class="form-control" id="email" required data-parsley-type="email" data-parsley-trigger="keyup" placeholder="Enter Email">
-					</div>
-					<div class="form-group">
-						<input type="password" name="password" class="form-control" id="password" required data-parsley-length="[5,15]" data-parsley-trigger="keyup" placeholder="Password">
-					</div>
+						<div class="form-group">
+							<input type="text" name="username" class="form-control" id="username" required data-parsley-length="[5,15]" data-parsley-trigger="keyup"
+							 placeholder="Your Username">
+						</div>
+						<div class="form-group">
+							<input type="email" name="email" class="form-control" id="email" required data-parsley-type="email" data-parsley-trigger="keyup"
+							 placeholder="Enter Email">
+						</div>
+						<div class="form-group">
+							<input type="password" name="password" class="form-control" id="password" required data-parsley-length="[5,15]" data-parsley-trigger="keyup"
+							 placeholder="Password">
+						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -117,14 +120,14 @@
 			<h3>Your sun sign description</h3>
 			<div id="signDescription"></div>
 		</div>
+		<br>
 		<div class="container-fluid bg-3 text-center compat">
 			<h3>Who you're compatible with</h3>
-			<br><br><br>
-			<div>
-				<div class="btn-group" id="displayButtons">
-				</div>
-			</div>
 			<br><br>
+			<div class="col-sm-12" id="displayLabel"></div>
+			<br>
+			<div class="col-sm-12" id="displayButtons"></div>
+			<br>
 			<div class="row">
 				<table class="table table-sm table-hover">
 					<thead>
