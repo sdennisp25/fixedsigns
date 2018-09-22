@@ -129,7 +129,7 @@ function getProfile(snapshot) {
 	userEmail = profile.userEmail;
 	//Display profile information in the DOM as needed
 	$(".sun-sign").html($sunSign);
-	$("#sunSignPic").attr("src", "./images/" + $sunSign + ".png");
+	$("#sunSignPic").attr("src", "images/" + $sunSign + ".png");
 	$("#showProfile").html("Name: " + $firstName + "<br>" + "Gender: " + $gender + "<br>" + "About Me: " + $aboutYou);
 	$("#signDescription").html(description[$sunSign]);
 	bestMatches($sunSign);
