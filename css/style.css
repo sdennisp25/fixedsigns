@@ -40,6 +40,11 @@ footer {
 	text-align: center;
 }
 
+.btn {
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
+}
+
 .profile-body {
 	background-color: rgb(194, 230, 244);
 }
@@ -117,6 +122,9 @@ footer {
 
 #signDescription {
 	box-sizing: border-box;
+	font-family: 'Courier New', Courier, monospace;
+	width: 100%;
+	height: 200px;
 	border-radius: 25px;
 	padding: 15px;
 	font-size: 20px;
@@ -138,6 +146,21 @@ footer {
 	width: 100%;
 	text-align: center;
 	font-size: 30px;
+}
+
+#excludeBtn {
+	width: 50%;
+	height: 100%;
+	margin: 4px 2px;
+	padding: 16px 32px;
+	border-radius: 50%;
+	-webkit-transition-duration: 0.4s; /* Safari */
+ transition-duration: 0.4s;
+ cursor: pointer;
+}
+#excludeBtn:hover {
+	background-color: #008CBA;
+	color: antiquewhite;
 }
 
 
@@ -183,7 +206,7 @@ footer {
 }
 
 
-/* ////////////////////////// 640 WIDTH /////////////////////////// */
+/* ////////////////////////// 574 WIDTH /////////////////////////// */
 @media screen and (max-width: 574px) {
 
 	.heart {
