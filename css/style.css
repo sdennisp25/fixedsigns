@@ -1,25 +1,47 @@
-.profile-body {
-	background-color: rgb(194, 230, 244);
-}
-
-#content {
-	width: 960px;
-	margin: 0 auto;
-	background-color: rgb(194, 230, 244);
+a {
+	color: #00A3CC;
+	font-size: 18px;
 }
 
 nav {
 	height: 80px;
 }
+
+ul {
+	float: left;
+}
+
+h1 {
+	box-sizing: border-box;
+}
+
+h3 {
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
+	display: inline;
+}
+
+h4 {
+	color: white;
+	font-size: 15px;
+}
+th {
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
+}
+
+footer {
+	padding: 5px;
+	text-align: center;
+}
+
+.profile-body {
+	background-color: rgb(194, 230, 244);
+}
 	
 .navbar-brand {
 	color: #00A3CC;
-	font-size: 24px;
-}
-	
-a{
-	color: #00A3CC;
-	font-size: 18px;
+	font-size: 40px;
 }
 
 .heart {
@@ -34,32 +56,15 @@ a{
 	margin-top: 50px;
 }
 
-#container-heart {
-	position: absolute;
-	position:  sticky;
-	left: 0;
-	top: 30%;
-	width: 100%;
-	text-align: center;
-	font-size: 30px;
-}
-
 .choices {
 	font-family: 'Courier New', Courier, monospace;
 	font-weight: bold;
 }
 
 .container-fluid {
-	padding-top: 70px;
-	padding-bottom: 70px;
-}
-	
-#showProfile{
-background-color: #00A3CC;
-border-radius: 25px;
-color: white;
-font-family: 'Courier New', Courier, monospace;
-font-size: 40px;
+	position: relative;
+	box-sizing: border-box;
+	width: 100%;
 }
 
 .text-center {
@@ -88,14 +93,14 @@ font-size: 40px;
 	}
 
 .sun-sign {
-	font-size: 80px;
+	font-size: 70px;
 	font-family: 'Courier New', Courier, monospace;
 	font-weight: bold;
 }
 
-h3 {
-	font-family: 'Courier New', Courier, monospace;
-	font-weight: bold;
+.navbar {
+	width: 100%;
+	height: 10%;
 }
 
 p {
@@ -106,9 +111,33 @@ p {
 th {
 	font-family: 'Courier New', Courier, monospace;
 	font-weight: bold;
+.table {
+	margin-bottom: 10%;
+}
+	
+#showProfile{
+background-color: #00A3CC;
+border-radius: 25px;
+color: white;
+font-family: 'Courier New', Courier, monospace;
+font-size: 40px;
 }
 
+#content {
+	width: 960px;
+	margin: 0 auto;
+	background-color: rgb(194, 230, 244);
+}
+
+#signDescription {
+	box-sizing: border-box;
+	border-radius: 25px;
+	padding: 15px;
+	font-size: 20px;
+	}
+
 #matchBtn {
+	margin-right: 2%;
 	width: 100px;
 	height: 100px;
 	border-radius: 50%;
@@ -134,87 +163,86 @@ th {
 	font-weight: bold;
 }
 
+#container-heart {
+	position: absolute;
+	position:  sticky;
+	left: 0;
+	top: 30%;
+	width: 100%;
+	text-align: center;
+	font-size: 30px;
+}
 
-@media only screen and (max-width: 600px) {
-	.profile-body {
-		background-color: rgb(194, 230, 244);
-	}
-	
-	#content {
-		width: 960px;
-		margin: 0 auto;
-		background-color: rgb(194, 230, 244);
-	}
-	
-	nav {
-		height: 80px;
-	}
-		
-	.navbar-brand {
-		color: #00A3CC;
-		font-size: 24px;
-	}
-		
-	a{
-		color: #00A3CC;
-		font-size: 18px;
-	}
-	
+
+
+/* ////////////////////////// 980 WIDTH /////////////////////////// */
+@media screen and (max-width: 980px) {
 	.heart {
-		width: 35%;
-		height: 35%;
+		width: 70%;
+		height: 70%;
 	}
-	
-	.image-heart {
-		position: relative;
-		padding: 15px;
-		text-align: center;
-		margin-top: 50px;
-	}
-	
-	#container-heart {
-		position: absolute;
-		position:  sticky;
-		left: 0;
-		top: 30%;
+
+	h3 {
 		width: 100%;
-		text-align: center;
-		font-size: 30px;
+		height: 35%;
+		padding: 20px;
 	}
-	
-	.choices {
-		font-family: 'Courier New', Courier, monospace;
-		font-weight: bold;
+
+	footer {
+		margin-top: 5%;
 	}
-	
-	.container-fluid {
-		padding-top: 70px;
-		padding-bottom: 70px;
+
+}
+
+
+/* ////////////////////////// 768 WIDTH /////////////////////////// */
+
+@media screen and (max-width: 768px) {
+	.heart {
+		width: 70%;
+		height: 70%;
 	}
-		
-	#showProfile{
-	background-color: #00A3CC;
-	border-radius: 25px;
-	color: white;
-	font-family: 'Courier New', Courier, monospace;
-	font-size: 40px;
+
+	h3 {
+		width: 100%;
+		height: 35%;
+		padding: 20px;
 	}
-	
-	.text-center {
-		font-family: Arial, Helvetica, sans-serif;
+
+	footer {
+		margin-top: 5%;
 	}
-	
-	.img-circle {
-		width: 200px;
-		height: 200px;
+
+}
+
+
+/* ////////////////////////// 640 WIDTH /////////////////////////// */
+@media screen and (max-width: 574px) {
+
+	.heart {
+		width: 90%;
+		height: 90%;
+		margin-bottom: 0;
 	}
-	
-	.descript {
-		background-color: rgb(96, 143, 244);
-		color: white;
-		border-radius: 25px;
+
+	h3 {
+		width: 100%;
+		height: 35%;
+		padding: 20px;
 	}
-	
+
+	footer {
+		margin-top: 5%;
+	}
+
+	.navbar {
+		display: inline-block;
+	}
+
+	h1 {
+		font-size: 10px;
+	}
+
 	#signDescription {
 		box-sizing: border-box;
 		font-family: 'Courier New', Courier, monospace;
@@ -225,43 +253,5 @@ th {
 		font-size: 20px;
 		overflow: auto;
 		}
-	
-	.sun-sign {
-		font-size: 80px;
-		font-family: 'Courier New', Courier, monospace;
-		font-weight: bold;
-	}
-	
-	h3 {
-		font-family: 'Courier New', Courier, monospace;
-		font-weight: bold;
-	}
-	th {
-		font-family: 'Courier New', Courier, monospace;
-		font-weight: bold;
-	}
-	
-	#matchBtn {
-		width: 50px;
-		height: 50px;
-		border-radius: 50%;
-		
-	}
 
-	#excludeBtn {
-		width: 50%;
-		height: 100%;
-		margin: 4px 2px;
-		padding: 16px 32px;
-		border-radius: 50%;
-		-webkit-transition-duration: 0.4s; /* Safari */
-		transition-duration: 0.4s;
-		cursor: pointer;
-	}
-	
-	#excludeBtn:hover {
-		background-color: #008CBA;
-		color: antiquewhite;
-	}
 }
-
